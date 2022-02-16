@@ -91,6 +91,11 @@ namespace PGSauce.Core.Utilities
             return a <= f && f <= b;
         }
         
+        public static bool IsBetween(this int f, float a, float b, bool strict = false)
+        {
+            return ((float) f).IsBetween(a, b, strict);
+        }
+        
         public static void Alpha(this Graphic graphics, float a)
         {
             graphics.color = graphics.color.Alpha(a);

@@ -2,16 +2,16 @@
 
 namespace PGSauce.Games.IaEsgi.Ia
 {
-    public abstract class QAction<TAgent> : QActionBase where TAgent : QAgentBase
+    public abstract class QAction<TAgent, TState> : QActionBase where TAgent : QAgentBase where TState: QState
     {
-        private Func<TAgent, QState> _action;
+        private Func<TAgent, TState> _action;
 
-        public QAction(Func<TAgent, QState> action)
+        public QAction(Func<TAgent, TState> action)
         {
             _action = action;
         }
 
-        public QState DoAction(QAgent<TAgent> qAgent)
+        public TState DoAction(QAgent<TAgent, TState> qAgent)
         {
             return _action(qAgent as TAgent);
         }

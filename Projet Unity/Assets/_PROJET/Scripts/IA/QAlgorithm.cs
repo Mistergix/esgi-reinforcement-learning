@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace PGSauce.Games.IaEsgi.Ia
 {
-    public abstract class QAlgorithm<TAgent> : PGMonoBehaviour where TAgent : QAgentBase
+    public abstract class QAlgorithm<TAgent, TState> : PGMonoBehaviour where TAgent : QAgentBase where TState : QState
     {
         #region Public And Serialized Fields
         [SerializeField] private float learningRate;
@@ -20,18 +20,18 @@ namespace PGSauce.Games.IaEsgi.Ia
         #region Private Fields
         private Float01 _epsilonGreedyRate;
         private List<QState> _states;
-        private List<QAction<TAgent>> _actions;
-        private QTable<TAgent> _qTable;
-        private QAgent<TAgent> _agent;
+        private List<QAction<TAgent, TState>> _actions;
+        private QTable<TAgent, TState> _qTable;
+        private QAgent<TAgent, TState> _agent;
 
         #endregion
         #region Properties
 
-        public List<QAction<TAgent>> Actions => Agent.Actions;
+        public List<QAction<TAgent, TState>> Actions => Agent.Actions;
 
-        public List<QState> States => Agent.States;
+        public List<TState> States => Agent.States;
 
-        protected QAgent<TAgent> Agent
+        protected QAgent<TAgent, TState> Agent
         {
             get => _agent;
             set => _agent = value;
@@ -80,7 +80,7 @@ namespace PGSauce.Games.IaEsgi.Ia
 
         private void Execute()
         {
-            _qTable = new QTable<TAgent>(Actions, States);
+            _qTable = new QTable<TAgent, TState>(Actions, States);
             while (ContinueToRunAlgorithm())
             {
                 var action = ChooseAction();
@@ -97,10 +97,10 @@ namespace PGSauce.Games.IaEsgi.Ia
         
         private void UpdateQTable()
         {
-            throw new NotImplementedException();
+            PGDebug.Message("DO Update Q Table").LogTodo();
         }
 
-        private QAction<TAgent> ChooseAction()
+        private QAction<TAgent, TState> ChooseAction()
         {
             var value = Random.value;
             if (value <= _epsilonGreedyRate)

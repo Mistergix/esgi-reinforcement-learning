@@ -26,5 +26,15 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             this.y = y;
             this.x = x;
         }
+
+        public static Coords operator +(Coords a, Coords b)
+        {
+            return new Coords(a.x + b.x, a.y + b.y);
+        }
+
+        public override string ToString()
+        {
+            return $"({x}, {y})";
+        }
     }
 }

@@ -3,32 +3,32 @@ using PGSauce.Games.IaEsgi.Ia;
 
 namespace PGSauce.Games.IaEsgi.GridWorldConsole
 {
-    public class QAgentGridWorldConsole : QAgent<QAgentGridWorldConsole>
+    public class QAgentGridWorldConsole : QAgent<QAgentGridWorldConsole, QStateGridWorldConsole>
     {
         private GridWorld _gridWorld;
         
-        public QAgentGridWorldConsole(GridWorld gridWorld, List<QState> states,
-            List<QAction<QAgentGridWorldConsole>> actions, QState currentState) : base(states, actions, currentState)
+        public QAgentGridWorldConsole(GridWorld gridWorld, List<QStateGridWorldConsole> states,
+            List<QAction<QAgentGridWorldConsole, QStateGridWorldConsole>> actions, QStateGridWorldConsole currentState) : base(states, actions, currentState)
         {
             _gridWorld = gridWorld;
         }
         
-        public QState GoUp()
+        public QStateGridWorldConsole GoUp()
         {
             return _gridWorld.GoUp();
         }
 
-        public QState GoDown()
+        public QStateGridWorldConsole GoDown()
         {
             return _gridWorld.GoDown();
         }
 
-        public QState GoLeft()
+        public QStateGridWorldConsole GoLeft()
         {
             return _gridWorld.GoLeft();
         }
 
-        public QState GoRight()
+        public QStateGridWorldConsole GoRight()
         {
             return _gridWorld.GoRight();
         }
