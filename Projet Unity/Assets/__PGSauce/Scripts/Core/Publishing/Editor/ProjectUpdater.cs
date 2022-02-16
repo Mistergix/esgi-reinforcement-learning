@@ -4,7 +4,6 @@ using System.Linq;
 #if UNITY_EDITOR
 using PGSauce.Core.PGDebugging;
 using PGSauce.Core.Strings;
-using PGSauce.PGRemote.ABTest;
 using UnityEditor;
 using UnityEngine;
 
@@ -41,7 +40,6 @@ namespace PGSauce.Core.Publishing
 
         private static void ResetAbTests()
         {
-            ABTestHandler.Instance.Debug = false;
             PGDebug.Message($"Set AB TEST Handler Debug to false").Log();
         }
 

@@ -9,5 +9,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         {
             _coords = coords;
         }
+
+        public Coords Coords => _coords;
     }
 }

@@ -1,5 +1,4 @@
 using GameTroopers.UI;
-using PGSauce.Analytics;
 using PGSauce.Core.PGDebugging;
 using PGSauce.Core.Utilities;
 using UnityEngine;
@@ -65,7 +64,6 @@ namespace PGSauce.UI
         public TMenu ShowMenu<TMenu>() where TMenu : Menu
         {
             var menuName = typeof(TMenu).ToString().RemoveNamespace();
-            AnalyticsEventManager.Instance.OpenedUI(new AnalyticsUIOpenedEventSchema(menuName));
             return ArcadiaMenuManager.ShowMenu<TMenu>(GroupName);
         }
 

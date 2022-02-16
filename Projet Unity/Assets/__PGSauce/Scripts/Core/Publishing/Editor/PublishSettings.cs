@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using GameAnalyticsSDK;
 using MonKey.Extensions;
-using PGSauce.Analytics;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -112,9 +111,6 @@ namespace PGSauce.Core.Publishing
             {
                 throw new UnityException($"Game analytics keys are not set for {RuntimePlatform.ToString()}");
             }
-                
-            GameAnalytics.SettingsGA.EmailGA = GameAnalyticsManager.Instance.Email;
-            GameAnalytics.SettingsGA.PasswordGA = GameAnalyticsManager.Instance.Password;
 
             if (!GameAnalytics.SettingsGA.Platforms.Contains(RuntimePlatform))
             {
