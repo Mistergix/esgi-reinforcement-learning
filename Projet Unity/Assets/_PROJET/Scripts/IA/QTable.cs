@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace PGSauce.Games.IaEsgi.Ia
 {
-    public class QTable
+    public class QTable<TAgent> where TAgent : QAgentBase
     {
         private Dictionary<QTableCoord, float> _table;
 
-        public QTable(List<QAction> actions, List<QState> states)
+        public QTable(List<QAction<TAgent>> actions, List<QState> states)
         {
             _table = new Dictionary<QTableCoord, float>();
 
@@ -23,17 +23,17 @@ namespace PGSauce.Games.IaEsgi.Ia
         
         private struct QTableCoord
         {
-            public QAction action;
+            public QAction<TAgent> action;
             public QState state;
 
-            public QTableCoord(QAction action, QState state)
+            public QTableCoord(QAction<TAgent> action, QState state)
             {
                 this.action = action;
                 this.state = state;
             }
         }
 
-        public float EvaluateAction(QAction action, QState state)
+        public float EvaluateAction(QAction<TAgent> action, QState state)
         {
             var coord = new QTableCoord(action, state);
             if (!_table.ContainsKey(coord))
