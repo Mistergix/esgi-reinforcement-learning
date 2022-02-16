@@ -30,6 +30,9 @@ namespace PGSauce.PGStartup
 
         async void Awake()
         {
+            SceneManager.LoadScene(1);
+            return;
+            
             if (PgSave.Instance.IsGameLaunchedForTheFirstTime)
             {
                 PGDebug.Message("Game Launched For the first time").Log();

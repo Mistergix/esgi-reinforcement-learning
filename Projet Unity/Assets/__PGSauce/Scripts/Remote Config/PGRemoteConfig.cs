@@ -25,7 +25,7 @@ namespace PGSauce.PGRemote
             var remotes = RemoteConfigTool.Instance.Container.Configs;
             foreach (var remote in remotes)
             {
-                remote.OnReset();
+//                remote.OnReset();
             }
         }
 
