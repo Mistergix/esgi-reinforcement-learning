@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b340139c9e4d054f904d8b452798652, type: 3}
+  m_Name: ES3Defaults
+  m_EditorClassIdentifier: 
+  settings:
+    _location: 0
+    path: SaveFile.es3
+    encryptionType: 0
+    compressionType: 0
+    encryptionPassword: password
+    directory: 0
+    format: 0
+    prettyPrint: 1
+    bufferSize: 2048
+    saveChildren: 1
+    typeChecking: 1
+    safeReflection: 1
+    memberReferenceMode: 0
+    referenceMode: 2
+    serializationDepthLimit: 64
+    assemblyNames:
+    - LeTai.TrueShadow
+    - Assembly-CSharp
+    - Dreamteck.Utilities
+    - MoreMountains.Tools
+    - Dreamteck.Splines
+    - ShapesRuntime
+    - MoreMountains.NiceVibrations.Haptics
+    - MoreMountains.Feedbacks
+    - Cinemachine
+    - MoreMountains.Feedbacks.MMTools
+    - MoreMountains.Feedbacks.PostProcessing
+    - Animancer.Examples
+    - MoreMountains.Feedbacks.Cinemachine
+    - LeTai.TrueShadow.Demo
+    - Animancer
+    - MoreMountains.Feedbacks.TextMeshPro
+    - ALINE
+    - Google.Play.Common
+    - LeanTouch
+    - MoreMountains.Feel.Demos
+    - LeanLocalization
+    - MoreMountains.Feel.Demos.HDRP
+    - MoreMountains.NiceVibrations.Demos
+    - Animancer.FSM
+    - LeanCommon
+    - MoreMountains.NiceVibrations
+    - Google.Play.AppUpdate
+    - Google.Play.Core
+    - Purchasing.Common
+    - MoreMountains.Tools.TextMeshPro
+    - MoreMountains.Feedbacks.NiceVibrations
+    - LoadingScreen.Misc
+    - MoreMountains.Tools.Feedbacks
+    - MoreMountains.Feel.Demos.URP
+    - Sirenix.OdinInspector.CompatibilityLayer
+    - MoreMountains.Tools.Cinemachine
+    - MoreMountains.Tools.Editor
+    - Dreamteck.Splines.Editor
+    - Google.Android.AppBundle.Editor
+    - MoreMountains.Feedbacks.Editor
+    - ShapesEditor
+    - Dreamteck.Utilities.Editor
+    - LeTai.TrueShadow.Editor
+    - AssetUsageDetector.Editor
+    - MoreMountains.Tools.Feedbacks.Editor
+    - Sirenix.OdinInspector.CompatibilityLayer.Editor
+    - ALINEEditor
+    - MoreMountains.NiceVibrations.Editor
+    - Analytics
+    - com.ecasillas.missingrefsfinder
+    - Sirenix.OdinInspector.Modules.UnityMathematics
+    - ALINEPackageToolsEditor
+    showAdvancedSettings: 0
+  addMgrToSceneAutomatically: 0
+  autoUpdateReferences: 1
+  addAllPrefabsToManager: 1
+  logDebugInfo: 0
+  logWarnings: 1
+  logErrors: 1

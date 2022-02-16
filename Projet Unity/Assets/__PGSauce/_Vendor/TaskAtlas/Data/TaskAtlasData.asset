@@ -1,0 +1,435 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abfacc558affdfc4aa49b85f5fb719e8, type: 3}
+  m_Name: TaskAtlasData
+  m_EditorClassIdentifier: 
+  version: 2.0.3
+  sceneIndex: 1
+  sceneIndexPrev: 6
+  scene:
+  - name: Assets/_Drop Da Bomb/Scenes/0_Check Update.unity
+    sortMode: 0
+    showLandmarkLabels: 0
+    showTaskGizmos: 0
+    showStickies: 0
+    landmarkDetailState: 0
+    selectedLandmark: 0
+    zoomToTaskID: 
+    scrollPosLandmarkDetail: {x: 0, y: 0}
+    scrollPosLandmarkDetailGeneral: {x: 0, y: 0}
+    scrollPosLandmarkDetailTags: {x: 0, y: 0}
+    scrollPosLandmarkDetailGallery: {x: 0, y: 0}
+    scrollPosLandmarkDetailGalleryThumbnails: {x: 0, y: 0}
+    scrollPosLandmarkDetailDelete: {x: 0, y: 0}
+    scrollPosLandmark: {x: 0, y: 0}
+    scrollPosLandmarkSort: {x: 0, y: 0}
+    scrollPosLandmarkTags: {x: 0, y: 0}
+    scrollPosAtlasTasks: {x: 0, y: 0}
+    scrollPosAtlasLandmarkZoom: {x: 0, y: 0}
+    scrollPosAtlasTaskZoom: {x: 0, y: 0}
+    landmarkDetailOpen: 0
+    landmarkThumbnailsLoaded: 0
+    history: []
+    landmarks: []
+    count: 0
+    atlas:
+      thumbnail: []
+      landmarkSelected: -1
+      state: 0
+      viewPointSizesLandmarks: []
+      focusPositions: []
+      viewPointsTasks: []
+      viewPointSizesTasks: []
+      prevPosition: {x: 0, y: 0, z: 0}
+      legitPosition: {x: 0, y: 0, z: 0}
+      prevRotation: {x: 0, y: 0, z: 0, w: 0}
+      prevSize: 0
+      tiltAngles: 8
+      rotAngles: 8
+      zoomLevels: 50
+      tiltCurrent: 0
+      rotCurrent: 0
+      zoomCurrent: 0
+      landmarkFocus: 0
+      landmarkFocusCount: 0
+      taskFocus: 0
+      taskFocusCount: 0
+      taskZoom: 0
+      taskZoomLevels: 50
+      enabled: 0
+      isZooming: 0
+      settings: 0
+  - name: Assets/_Drop Da Bomb/Scenes/-1_Startup.unity
+    sortMode: 0
+    showLandmarkLabels: 0
+    showTaskGizmos: 0
+    showStickies: 0
+    landmarkDetailState: 0
+    selectedLandmark: 0
+    zoomToTaskID: 
+    scrollPosLandmarkDetail: {x: 0, y: 0}
+    scrollPosLandmarkDetailGeneral: {x: 0, y: 0}
+    scrollPosLandmarkDetailTags: {x: 0, y: 0}
+    scrollPosLandmarkDetailGallery: {x: 0, y: 0}
+    scrollPosLandmarkDetailGalleryThumbnails: {x: 0, y: 0}
+    scrollPosLandmarkDetailDelete: {x: 0, y: 0}
+    scrollPosLandmark: {x: 0, y: 0}
+    scrollPosLandmarkSort: {x: 0, y: 0}
+    scrollPosLandmarkTags: {x: 0, y: 0}
+    scrollPosAtlasTasks: {x: 0, y: 0}
+    scrollPosAtlasLandmarkZoom: {x: 0, y: 0}
+    scrollPosAtlasTaskZoom: {x: 0, y: 0}
+    landmarkDetailOpen: 0
+    landmarkThumbnailsLoaded: 0
+    history: []
+    landmarks: []
+    count: 0
+    atlas:
+      thumbnail: []
+      landmarkSelected: -1
+      state: 0
+      viewPointSizesLandmarks: []
+      focusPositions: []
+      viewPointsTasks: []
+      viewPointSizesTasks: []
+      prevPosition: {x: 0, y: 0, z: 0}
+      legitPosition: {x: 0, y: 0, z: 0}
+      prevRotation: {x: 0, y: 0, z: 0, w: 0}
+      prevSize: 0
+      tiltAngles: 8
+      rotAngles: 8
+      zoomLevels: 50
+      tiltCurrent: 0
+      rotCurrent: 0
+      zoomCurrent: 0
+      landmarkFocus: 0
+      landmarkFocusCount: 0
+      taskFocus: 0
+      taskFocusCount: 0
+      taskZoom: 0
+      taskZoomLevels: 50
+      enabled: 0
+      isZooming: 0
+      settings: 0
+  - name: Assets/_Drop Da Bomb/Scenes/Main Menu Scene.unity
+    sortMode: 0
+    showLandmarkLabels: 0
+    showTaskGizmos: 0
+    showStickies: 0
+    landmarkDetailState: 0
+    selectedLandmark: 0
+    zoomToTaskID: 
+    scrollPosLandmarkDetail: {x: 0, y: 0}
+    scrollPosLandmarkDetailGeneral: {x: 0, y: 0}
+    scrollPosLandmarkDetailTags: {x: 0, y: 0}
+    scrollPosLandmarkDetailGallery: {x: 0, y: 0}
+    scrollPosLandmarkDetailGalleryThumbnails: {x: 0, y: 0}
+    scrollPosLandmarkDetailDelete: {x: 0, y: 0}
+    scrollPosLandmark: {x: 0, y: 0}
+    scrollPosLandmarkSort: {x: 0, y: 0}
+    scrollPosLandmarkTags: {x: 0, y: 0}
+    scrollPosAtlasTasks: {x: 0, y: 0}
+    scrollPosAtlasLandmarkZoom: {x: 0, y: 0}
+    scrollPosAtlasTaskZoom: {x: 0, y: 0}
+    landmarkDetailOpen: 0
+    landmarkThumbnailsLoaded: 0
+    history: []
+    landmarks: []
+    count: 0
+    atlas:
+      thumbnail: []
+      landmarkSelected: -1
+      state: 0
+      viewPointSizesLandmarks: []
+      focusPositions: []
+      viewPointsTasks: []
+      viewPointSizesTasks: []
+      prevPosition: {x: 0, y: 0, z: 0}
+      legitPosition: {x: 0, y: 0, z: 0}
+      prevRotation: {x: 0, y: 0, z: 0, w: 0}
+      prevSize: 0
+      tiltAngles: 8
+      rotAngles: 8
+      zoomLevels: 50
+      tiltCurrent: 0
+      rotCurrent: 0
+      zoomCurrent: 0
+      landmarkFocus: 0
+      landmarkFocusCount: 0
+      taskFocus: 0
+      taskFocusCount: 0
+      taskZoom: 0
+      taskZoomLevels: 50
+      enabled: 0
+      isZooming: 0
+      settings: 0
+  - name: Assets/GUI PRO Kit - Casual Game/Scenes/DemoScene_(v2.0).unity
+    sortMode: 0
+    showLandmarkLabels: 0
+    showTaskGizmos: 0
+    showStickies: 0
+    landmarkDetailState: 0
+    selectedLandmark: 0
+    zoomToTaskID: 
+    scrollPosLandmarkDetail: {x: 0, y: 0}
+    scrollPosLandmarkDetailGeneral: {x: 0, y: 0}
+    scrollPosLandmarkDetailTags: {x: 0, y: 0}
+    scrollPosLandmarkDetailGallery: {x: 0, y: 0}
+    scrollPosLandmarkDetailGalleryThumbnails: {x: 0, y: 0}
+    scrollPosLandmarkDetailDelete: {x: 0, y: 0}
+    scrollPosLandmark: {x: 0, y: 0}
+    scrollPosLandmarkSort: {x: 0, y: 0}
+    scrollPosLandmarkTags: {x: 0, y: 0}
+    scrollPosAtlasTasks: {x: 0, y: 0}
+    scrollPosAtlasLandmarkZoom: {x: 0, y: 0}
+    scrollPosAtlasTaskZoom: {x: 0, y: 0}
+    landmarkDetailOpen: 0
+    landmarkThumbnailsLoaded: 0
+    history: []
+    landmarks: []
+    count: 0
+    atlas:
+      thumbnail: []
+      landmarkSelected: -1
+      state: 0
+      viewPointSizesLandmarks: []
+      focusPositions: []
+      viewPointsTasks: []
+      viewPointSizesTasks: []
+      prevPosition: {x: 0, y: 0, z: 0}
+      legitPosition: {x: 0, y: 0, z: 0}
+      prevRotation: {x: 0, y: 0, z: 0, w: 0}
+      prevSize: 0
+      tiltAngles: 8
+      rotAngles: 8
+      zoomLevels: 50
+      tiltCurrent: 0
+      rotCurrent: 0
+      zoomCurrent: 0
+      landmarkFocus: 0
+      landmarkFocusCount: 0
+      taskFocus: 0
+      taskFocusCount: 0
+      taskZoom: 0
+      taskZoomLevels: 50
+      enabled: 0
+      isZooming: 0
+      settings: 0
+  - name: Assets/_Drop Da Bomb/Scenes/Game Scene.unity
+    sortMode: 0
+    showLandmarkLabels: 0
+    showTaskGizmos: 0
+    showStickies: 0
+    landmarkDetailState: 0
+    selectedLandmark: 0
+    zoomToTaskID: 
+    scrollPosLandmarkDetail: {x: 0, y: 0}
+    scrollPosLandmarkDetailGeneral: {x: 0, y: 0}
+    scrollPosLandmarkDetailTags: {x: 0, y: 0}
+    scrollPosLandmarkDetailGallery: {x: 0, y: 0}
+    scrollPosLandmarkDetailGalleryThumbnails: {x: 0, y: 0}
+    scrollPosLandmarkDetailDelete: {x: 0, y: 0}
+    scrollPosLandmark: {x: 0, y: 0}
+    scrollPosLandmarkSort: {x: 0, y: 0}
+    scrollPosLandmarkTags: {x: 0, y: 0}
+    scrollPosAtlasTasks: {x: 0, y: 0}
+    scrollPosAtlasLandmarkZoom: {x: 0, y: 0}
+    scrollPosAtlasTaskZoom: {x: 0, y: 0}
+    landmarkDetailOpen: 0
+    landmarkThumbnailsLoaded: 0
+    history: []
+    landmarks: []
+    count: 0
+    atlas:
+      thumbnail: []
+      landmarkSelected: -1
+      state: 0
+      viewPointSizesLandmarks: []
+      focusPositions: []
+      viewPointsTasks: []
+      viewPointSizesTasks: []
+      prevPosition: {x: 0, y: 0, z: 0}
+      legitPosition: {x: 0, y: 0, z: 0}
+      prevRotation: {x: 0, y: 0, z: 0, w: 0}
+      prevSize: 0
+      tiltAngles: 8
+      rotAngles: 8
+      zoomLevels: 50
+      tiltCurrent: 0
+      rotCurrent: 0
+      zoomCurrent: 0
+      landmarkFocus: 0
+      landmarkFocusCount: 0
+      taskFocus: 0
+      taskFocusCount: 0
+      taskZoom: 0
+      taskZoomLevels: 50
+      enabled: 0
+      isZooming: 0
+      settings: 0
+  - name: Assets/__PGSauce/_Vendor/SpriteOutline/Demo/Scenes/Demo1.unity
+    sortMode: 0
+    showLandmarkLabels: 0
+    showTaskGizmos: 0
+    showStickies: 0
+    landmarkDetailState: 0
+    selectedLandmark: 0
+    zoomToTaskID: 
+    scrollPosLandmarkDetail: {x: 0, y: 0}
+    scrollPosLandmarkDetailGeneral: {x: 0, y: 0}
+    scrollPosLandmarkDetailTags: {x: 0, y: 0}
+    scrollPosLandmarkDetailGallery: {x: 0, y: 0}
+    scrollPosLandmarkDetailGalleryThumbnails: {x: 0, y: 0}
+    scrollPosLandmarkDetailDelete: {x: 0, y: 0}
+    scrollPosLandmark: {x: 0, y: 0}
+    scrollPosLandmarkSort: {x: 0, y: 0}
+    scrollPosLandmarkTags: {x: 0, y: 0}
+    scrollPosAtlasTasks: {x: 0, y: 0}
+    scrollPosAtlasLandmarkZoom: {x: 0, y: 0}
+    scrollPosAtlasTaskZoom: {x: 0, y: 0}
+    landmarkDetailOpen: 0
+    landmarkThumbnailsLoaded: 0
+    history: []
+    landmarks: []
+    count: 0
+    atlas:
+      thumbnail: []
+      landmarkSelected: -1
+      state: 0
+      viewPointSizesLandmarks: []
+      focusPositions: []
+      viewPointsTasks: []
+      viewPointSizesTasks: []
+      prevPosition: {x: 0, y: 0, z: 0}
+      legitPosition: {x: 0, y: 0, z: 0}
+      prevRotation: {x: 0, y: 0, z: 0, w: 0}
+      prevSize: 0
+      tiltAngles: 8
+      rotAngles: 8
+      zoomLevels: 50
+      tiltCurrent: 0
+      rotCurrent: 0
+      zoomCurrent: 0
+      landmarkFocus: 0
+      landmarkFocusCount: 0
+      taskFocus: 0
+      taskFocusCount: 0
+      taskZoom: 0
+      taskZoomLevels: 50
+      enabled: 0
+      isZooming: 0
+      settings: 0
+  - name: Assets/I2/MiniGames/Examples/Scenes/MiniGames.unity
+    sortMode: 0
+    showLandmarkLabels: 0
+    showTaskGizmos: 0
+    showStickies: 0
+    landmarkDetailState: 0
+    selectedLandmark: 0
+    zoomToTaskID: 
+    scrollPosLandmarkDetail: {x: 0, y: 0}
+    scrollPosLandmarkDetailGeneral: {x: 0, y: 0}
+    scrollPosLandmarkDetailTags: {x: 0, y: 0}
+    scrollPosLandmarkDetailGallery: {x: 0, y: 0}
+    scrollPosLandmarkDetailGalleryThumbnails: {x: 0, y: 0}
+    scrollPosLandmarkDetailDelete: {x: 0, y: 0}
+    scrollPosLandmark: {x: 0, y: 0}
+    scrollPosLandmarkSort: {x: 0, y: 0}
+    scrollPosLandmarkTags: {x: 0, y: 0}
+    scrollPosAtlasTasks: {x: 0, y: 0}
+    scrollPosAtlasLandmarkZoom: {x: 0, y: 0}
+    scrollPosAtlasTaskZoom: {x: 0, y: 0}
+    landmarkDetailOpen: 0
+    landmarkThumbnailsLoaded: 0
+    history: []
+    landmarks: []
+    count: 0
+    atlas:
+      thumbnail: []
+      landmarkSelected: -1
+      state: 0
+      viewPointSizesLandmarks: []
+      focusPositions: []
+      viewPointsTasks: []
+      viewPointSizesTasks: []
+      prevPosition: {x: 0, y: 0, z: 0}
+      legitPosition: {x: 0, y: 0, z: 0}
+      prevRotation: {x: 0, y: 0, z: 0, w: 0}
+      prevSize: 0
+      tiltAngles: 8
+      rotAngles: 8
+      zoomLevels: 50
+      tiltCurrent: 0
+      rotCurrent: 0
+      zoomCurrent: 0
+      landmarkFocus: 0
+      landmarkFocusCount: 0
+      taskFocus: 0
+      taskFocusCount: 0
+      taskZoom: 0
+      taskZoomLevels: 50
+      enabled: 0
+      isZooming: 0
+      settings: 0
+  - name: Assets/I2/MiniGames/Examples/Scenes/MiniGames_NGUI.unity
+    sortMode: 0
+    showLandmarkLabels: 0
+    showTaskGizmos: 0
+    showStickies: 0
+    landmarkDetailState: 0
+    selectedLandmark: 0
+    zoomToTaskID: 
+    scrollPosLandmarkDetail: {x: 0, y: 0}
+    scrollPosLandmarkDetailGeneral: {x: 0, y: 0}
+    scrollPosLandmarkDetailTags: {x: 0, y: 0}
+    scrollPosLandmarkDetailGallery: {x: 0, y: 0}
+    scrollPosLandmarkDetailGalleryThumbnails: {x: 0, y: 0}
+    scrollPosLandmarkDetailDelete: {x: 0, y: 0}
+    scrollPosLandmark: {x: 0, y: 0}
+    scrollPosLandmarkSort: {x: 0, y: 0}
+    scrollPosLandmarkTags: {x: 0, y: 0}
+    scrollPosAtlasTasks: {x: 0, y: 0}
+    scrollPosAtlasLandmarkZoom: {x: 0, y: 0}
+    scrollPosAtlasTaskZoom: {x: 0, y: 0}
+    landmarkDetailOpen: 0
+    landmarkThumbnailsLoaded: 0
+    history: []
+    landmarks: []
+    count: 0
+    atlas:
+      thumbnail: []
+      landmarkSelected: -1
+      state: 0
+      viewPointSizesLandmarks: []
+      focusPositions: []
+      viewPointsTasks: []
+      viewPointSizesTasks: []
+      prevPosition: {x: 0, y: 0, z: 0}
+      legitPosition: {x: 0, y: 0, z: 0}
+      prevRotation: {x: 0, y: 0, z: 0, w: 0}
+      prevSize: 0
+      tiltAngles: 8
+      rotAngles: 8
+      zoomLevels: 50
+      tiltCurrent: 0
+      rotCurrent: 0
+      zoomCurrent: 0
+      landmarkFocus: 0
+      landmarkFocusCount: 0
+      taskFocus: 0
+      taskFocusCount: 0
+      taskZoom: 0
+      taskZoomLevels: 50
+      enabled: 0
+      isZooming: 0
+      settings: 0
+  tags: []
