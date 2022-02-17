@@ -83,5 +83,13 @@ namespace PGSauce.Games.IaEsgi.Ia
             _table[coord] = newValue;
             PGDebug.Message($"New value in table at {coord} is {_table[coord]}").Log();
         }
+
+        public void Print()
+        {
+            foreach (var coord in _table.Keys)
+            {
+                PGDebug.Message($"Value in table at {coord} is {_table[coord]}").Log();
+            }
+        }
     }
 }

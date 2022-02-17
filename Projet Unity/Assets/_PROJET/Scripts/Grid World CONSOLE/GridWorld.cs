@@ -14,6 +14,8 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         #region Public And Serialized Fields
         [SerializeField] private GridWorldConsoleData level;
         private Dictionary<Coords,QStateGridWorldConsole> _statesDictionary;
+        private HashSet<Coords> _bombs;
+        private HashSet<Coords> _energies;
 
         #endregion
         #region Private Fields
@@ -25,12 +27,23 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         #region Private Methods
         #endregion
 
-        protected override bool ContinueToRunAlgorithm(QStateGridWorldConsole state)
+        protected override bool ContinueToRunAlgorithmForThisEpoch(QStateGridWorldConsole state)
         {
             return !state.Equals(_statesDictionary[level.end]);
         }
 
-        protected override void InitializeAlgorithm()
+        protected override void ResetForNewEpoch()
+        {
+            _energies = new HashSet<Coords>(level.energy);
+            _bombs = new HashSet<Coords>(level.bombs);
+        }
+
+        protected override void ResetAgent()
+        {
+            Agent.CurrentState = _statesDictionary[level.start];
+        }
+
+        protected override QAgent<QAgentGridWorldConsole, QStateGridWorldConsole> CreateAgent()
         {
             var actionUp = new QActionGridWorldConsole(agent => agent.GoUp(), "Go up");
             var actionDown = new QActionGridWorldConsole(agent => agent.GoDown(), "Go Down");
@@ -38,7 +51,8 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             var actionRight = new QActionGridWorldConsole(agent => agent.GoRight(), "Go Right");
             var actions = new List<QAction<QAgentGridWorldConsole, QStateGridWorldConsole>> {actionDown, actionUp, actionRight, actionLeft};
             _statesDictionary = CreateStates();
-            Agent = new QAgentGridWorldConsole(this, new List<QStateGridWorldConsole>(_statesDictionary.Values.ToList()), actions, _statesDictionary[level.start]);
+            var agent = new QAgentGridWorldConsole(this, new List<QStateGridWorldConsole>(_statesDictionary.Values.ToList()), actions, _statesDictionary[level.start]);
+            return agent;
         }
 
         private Dictionary<Coords, QStateGridWorldConsole> CreateStates()
@@ -97,15 +111,17 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         public float GetTileValue(Coords coords)
         {
             var factor = coords.Equals(Agent.OldState.Coords) ? 2 : 1;
-            if (level.bombs.Contains(coords))
+            if (_bombs.Contains(coords))
             {
                 PGDebug.Message($"{coords} is bomb").Log();
+                _bombs.Remove(coords);
                 return -100f * factor;
             }
 
-            if (level.energy.Contains(coords))
+            if (_energies.Contains(coords))
             {
                 PGDebug.Message($"{coords} is energy").Log();
+                _energies.Remove(coords);
                 return 5f;
             }
 

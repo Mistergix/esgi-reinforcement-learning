@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
 using PGSauce.Core.PGDebugging;
+using PGSauce.Games.IaEsgi.GridWorldConsole;
 
 namespace PGSauce.Games.IaEsgi.Ia
 {
     public abstract class QAgent<TAgent, TState> : QAgentBase where TAgent : QAgentBase where TState : QState
     {
-        private TState _currentState;
         private TState _oldState;
 
         protected QAgent(List<TState> states, List<QAction<TAgent, TState>> actions, TState currentState)
         {
-            _currentState = currentState;
-            _oldState = _currentState;
+            CurrentState = currentState;
+            _oldState = CurrentState;
             Actions = actions;
             States = states;
         }
 
-        public TState CurrentState => _currentState;
+        public TState CurrentState { get; set; }
+
         public List<QAction<TAgent, TState>> Actions { get; }
         public List<TState> States { get; }
 
@@ -24,10 +25,10 @@ namespace PGSauce.Games.IaEsgi.Ia
 
         public void TakeAction(QAction<TAgent, TState> action)
         {
-            PGDebug.Message($"Current state is {_currentState}").Log();
-            _oldState = _currentState;
-            _currentState = action.DoAction(this);
-            PGDebug.Message($"Current state is after action {_currentState}").Log();
+            PGDebug.Message($"Current state is {CurrentState}").Log();
+            _oldState = CurrentState;
+            CurrentState = action.DoAction(this);
+            PGDebug.Message($"Current state is after action {CurrentState}").Log();
         }
 
         public abstract float GetCurrentReward();

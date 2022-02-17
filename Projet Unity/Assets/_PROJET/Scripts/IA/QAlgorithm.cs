@@ -16,6 +16,7 @@ namespace PGSauce.Games.IaEsgi.Ia
         [SerializeField, Range(0,1)] private float learningRate;
         [SerializeField, Range(0,1)] private float discountRate;
         [SerializeField, Range(0,1)] private float epsilonGreedyInitialRate;
+        [SerializeField, Min(1)] private int maxEpochs = 10;
         #endregion
         #region Private Fields
         private Float01 _epsilonGreedyRate;
@@ -28,7 +29,7 @@ namespace PGSauce.Games.IaEsgi.Ia
 
         public List<TState> States => Agent.States;
 
-        protected QAgent<TAgent, TState> Agent { get; set; }
+        protected QAgent<TAgent, TState> Agent { get; private set; }
 
         #endregion
         #region Unity Functions
@@ -61,32 +62,56 @@ namespace PGSauce.Games.IaEsgi.Ia
         
         #endregion
         #region Public Methods
-        protected abstract bool ContinueToRunAlgorithm(TState agentCurrentState);
-        protected abstract void InitializeAlgorithm();
+        protected abstract bool ContinueToRunAlgorithmForThisEpoch(TState agentCurrentState);
+        protected abstract void ResetForNewEpoch();
 
         #endregion
         #region Private Methods
         
         private void Run()
         {
-            InitializeAlgorithm();
+            Agent = CreateAgent();
             StartCoroutine(Execute());
         }
+
+        protected abstract QAgent<TAgent, TState> CreateAgent();
 
         private IEnumerator Execute()
         {
             _qTable = new QTable<TAgent, TState>(Actions, States);
-            while (ContinueToRunAlgorithm(Agent.CurrentState))
+
+            for (int i = 0; i < maxEpochs; i++)
             {
-                var action = ChooseAction();
-                UpdateEpsilonGreedyRate();
+                PGDebug.Message($"------------------NEW EPOCH {i + 1}---------------------").Log();
+                ResetForNewEpoch();
+                ResetAgent();
+                while (ContinueToRunAlgorithmForThisEpoch(Agent.CurrentState))
+                {
+                    var action = ChooseAction();
+                    UpdateEpsilonGreedyRate();
+                    Agent.TakeAction(action);
+                    UpdateQTable(action);
+                    PGDebug.Message($"---------------------").Log();
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+            
+            _qTable.Print();
+            
+            PGDebug.Message($"------------------- RUN ALGORITHM -------------------").Log();
+            ResetForNewEpoch();
+            ResetAgent();
+            while (ContinueToRunAlgorithmForThisEpoch(Agent.CurrentState))
+            {
+                var action = GetBestAction();
                 Agent.TakeAction(action);
-                UpdateQTable(action);
                 PGDebug.Message($"---------------------").Log();
                 yield return new WaitForEndOfFrame();
             }
         }
-        
+
+        protected abstract void ResetAgent();
+
         private void UpdateEpsilonGreedyRate()
         {
             PGDebug.Message("DO epsilon greed decay").LogTodo();
@@ -116,6 +141,11 @@ namespace PGSauce.Games.IaEsgi.Ia
             }
             
             PGDebug.Message($"EXPLOITATION").Log();
+            return GetBestAction();
+        }
+
+        private QAction<TAgent, TState> GetBestAction()
+        {
             return GetMaxByProperty(Actions, action => _qTable.EvaluateAction(action, Agent.CurrentState));
         }
 
