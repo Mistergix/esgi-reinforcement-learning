@@ -44,6 +44,8 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         private int[,] levelData;
         private Vector2 middleOffset = new Vector2();
 
+        private GameObject player;
+
 
         #endregion
         #region Properties
@@ -70,6 +72,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             _statesDictionary = CreateStates();
             Agent = new QAgentGridWorldConsole(this, new List<QStateGridWorldConsole>(_statesDictionary.Values.ToList()), actions, _statesDictionary[level.start]);
         }
+
 
         private Dictionary<Coords, QStateGridWorldConsole> CreateStates()
         {
@@ -118,6 +121,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             var nextCoords = currenState.Coords + offset;
             if (IsInBounds(nextCoords))
             {
+                player.transform.position = GetScreenPointFromLevelIndices(nextCoords.x, nextCoords.y, -0.02f);
                 return _statesDictionary[nextCoords];
             }
 
@@ -168,16 +172,16 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
 
             foreach (Coords coords in level.bombs)
             {
-                levelData[coords.x, coords.y] = bombsTile;
+                levelData[coords.y, coords.x] = bombsTile;
             }
 
             foreach (Coords coords in level.energy)
             {
-                levelData[coords.x, coords.y] = energyTile;
+                levelData[coords.y, coords.x] = energyTile;
             }
 
-            levelData[level.start.x, level.start.y] = playerTile;
-            levelData[level.end.x, level.end.y] = endTile;
+            levelData[level.start.y, level.start.x] = playerTile;
+            levelData[level.end.y, level.end.x] = endTile;
 
         }
 
@@ -190,7 +194,6 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             GameObject energy;
             GameObject bombs;
             GameObject end;
-            GameObject player;
 
             int destinationCount = 0;
             for (int i = 0; i < rows; i++)
@@ -248,7 +251,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         Vector3 GetScreenPointFromLevelIndices(int row, int col, float z)
         {
             //converting indices to position values, col determines x & row determine y
-            return new Vector3(col * tileSize - middleOffset.x, row * -tileSize + middleOffset.y, z);
+            return new Vector3(col * tileSize - middleOffset.x, (row - level.height) * -tileSize + middleOffset.y, z);
         }
 
     }

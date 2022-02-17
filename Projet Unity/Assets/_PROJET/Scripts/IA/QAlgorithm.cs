@@ -66,7 +66,7 @@ namespace PGSauce.Games.IaEsgi.Ia
 
         #endregion
         #region Private Methods
-        
+
         private void Run()
         {
             InitializeAlgorithm();
@@ -83,7 +83,7 @@ namespace PGSauce.Games.IaEsgi.Ia
                 Agent.TakeAction(action);
                 UpdateQTable(action);
                 PGDebug.Message($"---------------------").Log();
-                yield return new WaitForEndOfFrame();
+                yield return new WaitForSeconds(1);
             }
         }
         
