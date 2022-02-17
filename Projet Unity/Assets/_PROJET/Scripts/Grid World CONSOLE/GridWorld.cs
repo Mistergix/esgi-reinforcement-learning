@@ -9,7 +9,7 @@ using PGSauce.Unity;
 
 namespace PGSauce.Games.IaEsgi.GridWorldConsole
 {
-    public class GridWorld : QAlgorithm<QAgentGridWorldConsole, QStateGridWorldConsole>
+    public class GridWorld : QLearning<QAgentGridWorldConsole, QStateGridWorldConsole>
     {
         #region Public And Serialized Fields
         [SerializeField] private GridWorldConsoleData level;

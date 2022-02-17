@@ -20,7 +20,6 @@ namespace PGSauce.Games.IaEsgi.Ia
         #endregion
         #region Private Fields
         private Float01 _epsilonGreedyRate;
-        private QTable<TAgent, TState> _qTable;
 
         #endregion
         #region Properties
@@ -30,6 +29,10 @@ namespace PGSauce.Games.IaEsgi.Ia
         public List<TState> States => Agent.States;
 
         protected QAgent<TAgent, TState> Agent { get; private set; }
+
+        public float LearningRate => learningRate;
+
+        public float DiscountRate => discountRate;
 
         #endregion
         #region Unity Functions
@@ -78,7 +81,7 @@ namespace PGSauce.Games.IaEsgi.Ia
 
         private IEnumerator Execute()
         {
-            _qTable = new QTable<TAgent, TState>(Actions, States);
+            CustomBeforeExecute();
 
             for (int i = 0; i < maxEpochs; i++)
             {
@@ -90,13 +93,13 @@ namespace PGSauce.Games.IaEsgi.Ia
                     var action = ChooseAction();
                     UpdateEpsilonGreedyRate();
                     Agent.TakeAction(action);
-                    UpdateQTable(action);
+                    CustomUpdateAfterAgentDoesAction(action);
                     PGDebug.Message($"---------------------").Log();
                     yield return new WaitForEndOfFrame();
                 }
             }
-            
-            _qTable.Print();
+
+            CustomAfterTrain();
             
             PGDebug.Message($"------------------- RUN ALGORITHM -------------------").Log();
             ResetForNewEpoch();
@@ -110,25 +113,17 @@ namespace PGSauce.Games.IaEsgi.Ia
             }
         }
 
+        protected abstract void CustomUpdateAfterAgentDoesAction(QAction<TAgent, TState> action);
+
+        protected abstract void CustomAfterTrain();
+
+        protected abstract void CustomBeforeExecute();
+
         protected abstract void ResetAgent();
 
         private void UpdateEpsilonGreedyRate()
         {
             PGDebug.Message("DO epsilon greed decay").LogTodo();
-        }
-        
-        private void UpdateQTable(QAction<TAgent, TState> qAction)
-        {
-            var old = _qTable.EvaluateAction(qAction, Agent.OldState);
-            var reward = Agent.GetCurrentReward();
-            var max = GetMaxQ(Agent.CurrentState);
-            var newValue = (1 - learningRate) * old + learningRate * reward + discountRate * max;
-            _qTable.UpdateValue(Agent.OldState, qAction, newValue);
-        }
-
-        private float GetMaxQ(TState state)
-        {
-            return Actions.Max(a => _qTable.EvaluateAction(a, state));
         }
 
         private QAction<TAgent, TState> ChooseAction()
@@ -144,15 +139,7 @@ namespace PGSauce.Games.IaEsgi.Ia
             return GetBestAction();
         }
 
-        private QAction<TAgent, TState> GetBestAction()
-        {
-            return GetMaxByProperty(Actions, action => _qTable.EvaluateAction(action, Agent.CurrentState));
-        }
-
-        private T GetMaxByProperty<T>(IEnumerable<T> list, Func<T, float> evaluator)
-        {
-            return list.Aggregate(((a1, a2) => evaluator(a1) > evaluator(a2) ? a1 : a2));
-        }
+        protected abstract QAction<TAgent, TState> GetBestAction();
         #endregion
     }
 }
