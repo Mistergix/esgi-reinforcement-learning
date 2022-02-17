@@ -18,9 +18,12 @@ namespace PGSauce.Games.IaEsgi.Ia
         [SerializeField, Range(0,1)] private float epsilonGreedyInitialRate;
         [SerializeField, UnityEngine.Min(0)] private float waitTimeTrain;
         [SerializeField, Min(0)] private float waitTimeRun;
+        [SerializeField] private bool showTraining;
         #endregion
         #region Private Fields
         private Float01 _epsilonGreedyRate;
+        private bool _isRunning;
+
         #endregion
         #region Properties
 
@@ -40,6 +43,7 @@ namespace PGSauce.Games.IaEsgi.Ia
         {
             PGDebug.Message($"AWAKE").Log();
             _epsilonGreedyRate = epsilonGreedyInitialRate;
+            _isRunning = true;
             Run();
         }
 
@@ -49,8 +53,23 @@ namespace PGSauce.Games.IaEsgi.Ia
         
         public void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TryRunTrainedAgent();
+            }
         }
-        
+
+        private void TryRunTrainedAgent()
+        {
+            if (_isRunning)
+            {
+                return;
+            }
+
+            _isRunning = true;
+            StartCoroutine(RunTrainedAgent());
+        }
+
         public void OnEnable()
         {
         }
@@ -78,7 +97,7 @@ namespace PGSauce.Games.IaEsgi.Ia
 
         protected abstract void CustomBeforeExecute();
 
-        protected abstract void ResetAgent();
+        protected abstract void ResetAgentForTraining();
         protected abstract QAction<TAgent, TState> GetBestAction();
 
         #endregion
@@ -88,10 +107,10 @@ namespace PGSauce.Games.IaEsgi.Ia
         {
             CustomInit();
             Agent = CreateAgent();
-            StartCoroutine(Execute());
+            StartCoroutine(Train());
         }
 
-        private IEnumerator Execute()
+        private IEnumerator Train()
         {
             CustomBeforeExecute();
 
@@ -100,7 +119,7 @@ namespace PGSauce.Games.IaEsgi.Ia
                 CurrentEpoch = i + 1;
                 PGDebug.Message($"------------------NEW EPOCH {CurrentEpoch}---------------------").Log();
                 ResetForNewEpoch();
-                ResetAgent();
+                ResetAgentForTraining();
                 while (ContinueToRunAlgorithmForThisEpoch(Agent.CurrentState))
                 {
                     var action = ChooseAction();
@@ -108,17 +127,27 @@ namespace PGSauce.Games.IaEsgi.Ia
                     Agent.TakeAction(action);
                     CustomUpdateAfterAgentDoesAction(action);
                     PGDebug.Message($"---------------------").Log();
-                    yield return new WaitForSeconds(waitTimeTrain);
+                    if (showTraining)
+                    {
+                        yield return new WaitForSeconds(waitTimeTrain);
+                    }
                 }
 
-                yield return new WaitForSeconds(waitTimeTrain * 5);
+                if (showTraining)
+                {
+                    yield return new WaitForSeconds(waitTimeTrain * 5);
+                }
             }
 
             CustomAfterTrain();
-            
+            _isRunning = false;
+        }
+
+        private IEnumerator RunTrainedAgent()
+        {
             PGDebug.Message($"------------------- RUN ALGORITHM -------------------").Log();
             ResetForNewEpoch();
-            ResetAgent();
+            ResetTrainedAgent();
             while (ContinueToRunAlgorithmForThisEpoch(Agent.CurrentState))
             {
                 var action = GetBestAction();
@@ -126,7 +155,11 @@ namespace PGSauce.Games.IaEsgi.Ia
                 PGDebug.Message($"---------------------").Log();
                 yield return new WaitForSeconds(waitTimeRun);
             }
+
+            _isRunning = false;
         }
+
+        protected abstract void ResetTrainedAgent();
 
         private void UpdateEpsilonGreedyRate()
         {

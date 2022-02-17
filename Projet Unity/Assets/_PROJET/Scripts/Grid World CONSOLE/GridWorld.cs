@@ -42,7 +42,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         private int _rows, _cols;
         private int[,] _levelData;
         private Vector2 _middleOffset = new Vector2();
-        private Dictionary<Coords,QStateGridWorldConsole> _statesDictionary;
+        private Dictionary<Coords, QStateGridWorldConsole> _statesDictionary;
         private HashSet<Coords> _bombs;
         private HashSet<Coords> _energies;
 
@@ -70,9 +70,15 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             _bombs = new HashSet<Coords>(level.bombs);
         }
 
-        protected override void ResetAgent()
+        protected override void ResetAgentForTraining()
         {
             Agent.CurrentState = _statesDictionary[level.start];
+        }
+
+        protected override void ResetTrainedAgent()
+        {
+            var randomCoords = new Coords(Random.Range(0, level.width), Random.Range(0, level.height));
+            Agent.CurrentState = _statesDictionary[randomCoords];
         }
 
         protected override QAgent<QAgentGridWorldConsole, QStateGridWorldConsole> CreateAgent()
@@ -149,7 +155,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             {
                 PGDebug.Message($"{coords} is bomb").Log();
                 _bombs.Remove(coords);
-                return -100f * factor;
+                return -10000f * factor;
             }
 
             if (_energies.Contains(coords))
