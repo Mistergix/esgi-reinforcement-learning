@@ -11,5 +11,10 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         }
 
         public Coords Coords => _coords;
+
+        public override string ToString()
+        {
+            return $"[STATE GRID {_coords}]";
+        }
     }
 }

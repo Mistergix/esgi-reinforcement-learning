@@ -3,9 +3,9 @@ using PGSauce.Games.IaEsgi.Ia;
 
 namespace PGSauce.Games.IaEsgi.GridWorldConsole
 {
-    public class QActionGridWorldConsole : QAction<QAgentGridWorldConsole>
+    public class QActionGridWorldConsole : QAction<QAgentGridWorldConsole, QStateGridWorldConsole>
     {
-        public QActionGridWorldConsole(Func<QAgentGridWorldConsole, QState> agent) : base(agent)
+        public QActionGridWorldConsole(Func<QAgentGridWorldConsole, QStateGridWorldConsole> agent, string name) : base(agent, name)
         {
         }
     }
