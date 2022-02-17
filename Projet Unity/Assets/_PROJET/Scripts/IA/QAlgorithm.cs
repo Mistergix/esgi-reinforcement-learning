@@ -82,7 +82,7 @@ namespace PGSauce.Games.IaEsgi.Ia
 
         #endregion
         #region Private Methods
-        
+
         private void Run()
         {
             CustomInit();
@@ -120,7 +120,7 @@ namespace PGSauce.Games.IaEsgi.Ia
                 var action = GetBestAction();
                 Agent.TakeAction(action);
                 PGDebug.Message($"---------------------").Log();
-                yield return new WaitForEndOfFrame();
+                yield return new WaitForSeconds(1);
             }
         }
 

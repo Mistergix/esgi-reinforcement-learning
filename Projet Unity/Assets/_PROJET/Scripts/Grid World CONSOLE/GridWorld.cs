@@ -46,6 +46,8 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         private HashSet<Coords> _bombs;
         private HashSet<Coords> _energies;
 
+        private GameObject player;
+
 
         #endregion
         #region Properties
@@ -84,6 +86,23 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             var agent = new QAgentGridWorldConsole(this, new List<QStateGridWorldConsole>(_statesDictionary.Values.ToList()), actions, _statesDictionary[level.start]);
             return agent;
         }
+
+
+        private Dictionary<Coords, QStateGridWorldConsole> CreateStates()
+        {
+            var states = new Dictionary<Coords, QStateGridWorldConsole>();
+            for (var i = 0; i < level.width; i++)
+            {
+                for (var j = 0; j < level.height; j++)
+                {
+                    var coords = new Coords(i, j);
+                    var state = new QStateGridWorldConsole(coords);
+                    states.Add(coords, state);
+                }
+            }
+
+            return states;
+        }
         
         public QStateGridWorldConsole GoUp()
         {
@@ -103,6 +122,24 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         public QStateGridWorldConsole GoRight()
         {
             return Move(new Coords(1, 0));
+        }
+
+        private bool IsInBounds(Coords nextCoords)
+        {
+            return nextCoords.x.IsBetween(0, level.width - 1) && nextCoords.y.IsBetween(0, level.height - 1);
+        }
+
+        private QStateGridWorldConsole Move(Coords offset)
+        {
+            var currenState = Agent.CurrentState;
+            var nextCoords = currenState.Coords + offset;
+            if (IsInBounds(nextCoords))
+            {
+                player.transform.position = GetScreenPointFromLevelIndices(nextCoords.x, nextCoords.y, -0.02f);
+                return _statesDictionary[nextCoords];
+            }
+
+            return Agent.CurrentState;
         }
         
         public float GetTileValue(Coords coords)
@@ -133,40 +170,6 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         }
         #endregion
         #region Private Methods
-        private Dictionary<Coords, QStateGridWorldConsole> CreateStates()
-        {
-            var states = new Dictionary<Coords, QStateGridWorldConsole>();
-            for (var i = 0; i < level.width; i++)
-            {
-                for (var j = 0; j < level.height; j++)
-                {
-                    var coords = new Coords(i, j);
-                    var state = new QStateGridWorldConsole(coords);
-                    states.Add(coords, state);
-                }
-            }
-
-            return states;
-        }
-
-        private bool IsInBounds(Coords nextCoords)
-        {
-            return nextCoords.x.IsBetween(0, level.width - 1) && nextCoords.y.IsBetween(0, level.height - 1);
-        }
-
-        private QStateGridWorldConsole Move(Coords offset)
-        {
-            var currenState = Agent.CurrentState;
-            var nextCoords = currenState.Coords + offset;
-            if (IsInBounds(nextCoords))
-            {
-                return _statesDictionary[nextCoords];
-            }
-
-            return Agent.CurrentState;
-        }
-
-       
 
         private void ParseLevel()
         {
@@ -187,16 +190,16 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
 
             foreach (Coords coords in level.bombs)
             {
-                _levelData[coords.x, coords.y] = bombsTile;
+                _levelData[coords.y, coords.x] = bombsTile;
             }
 
             foreach (Coords coords in level.energy)
             {
-                _levelData[coords.x, coords.y] = energyTile;
+                _levelData[coords.y, coords.x] = energyTile;
             }
 
-            _levelData[level.start.x, level.start.y] = playerTile;
-            _levelData[level.end.x, level.end.y] = endTile;
+            _levelData[level.start.y, level.start.x] = playerTile;
+            _levelData[level.end.y, level.end.x] = endTile;
 
         }
 
@@ -209,7 +212,6 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             GameObject energy;
             GameObject bombs;
             GameObject end;
-            GameObject player;
 
             int destinationCount = 0;
             for (int i = 0; i < _rows; i++)
@@ -267,7 +269,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         private Vector3 GetScreenPointFromLevelIndices(int row, int col, float z)
         {
             //converting indices to position values, col determines x & row determine y
-            return new Vector3(col * tileSize - _middleOffset.x, row * -tileSize + _middleOffset.y, z);
+            return new Vector3(col * tileSize - _middleOffset.x, (row - level.height) * -tileSize + _middleOffset.y, z);
         }
         #endregion
 
