@@ -135,7 +135,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             var nextCoords = currenState.Coords + offset;
             if (IsInBounds(nextCoords))
             {
-                player.transform.position = GetScreenPointFromLevelIndices(nextCoords.x, nextCoords.y, -0.02f);
+                player.transform.position = GetScreenPointFromLevelIndices(nextCoords.y + 1, nextCoords.x + 1, -0.02f);
                 return _statesDictionary[nextCoords];
             }
 
@@ -173,9 +173,9 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
 
         private void ParseLevel()
         {
-            cam.orthographicSize = level.height;
-            _rows = level.height;
-            _cols = level.width;
+            cam.orthographicSize = level.height + 2;
+            _rows = level.height + 2;
+            _cols = level.width + 2;
             _levelData = new int[_rows, _cols];
             for (int i = 0; i < _rows; i++)
             {
@@ -190,16 +190,16 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
 
             foreach (Coords coords in level.bombs)
             {
-                _levelData[coords.y, coords.x] = bombsTile;
+                _levelData[coords.y + 1, coords.x + 1] = bombsTile;
             }
 
             foreach (Coords coords in level.energy)
             {
-                _levelData[coords.y, coords.x] = energyTile;
+                _levelData[coords.y + 1, coords.x + 1] = energyTile;
             }
 
-            _levelData[level.start.y, level.start.x] = playerTile;
-            _levelData[level.end.y, level.end.x] = endTile;
+            _levelData[level.start.y + 1, level.start.x + 1] = playerTile;
+            _levelData[level.end.y + 1, level.end.x + 1] = endTile;
 
         }
 
@@ -208,7 +208,6 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             _middleOffset.x = _cols * tileSize * 0.5f - tileSize * 0.5f;
             _middleOffset.y = _rows * tileSize * 0.5f - tileSize * 0.5f;
             GameObject tile;
-            SpriteRenderer sr;
             GameObject energy;
             GameObject bombs;
             GameObject end;
@@ -223,7 +222,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
                     if (val != wallTile)
                     {
                         tile = Instantiate(groundPrefabs, new Vector3(0, 0, 0), Quaternion.identity);
-                        tile.name = "tile" + i.ToString() + "_" + j.ToString();
+                        tile.name = "tile" + (i - 1).ToString() + "_" + (j - 1).ToString();
                         tile.transform.localScale *= tileSize;
                         tile.transform.position = GetScreenPointFromLevelIndices(i, j, 0);
                         if (val == endTile)
@@ -269,7 +268,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         private Vector3 GetScreenPointFromLevelIndices(int row, int col, float z)
         {
             //converting indices to position values, col determines x & row determine y
-            return new Vector3(col * tileSize - _middleOffset.x, (row - level.height) * -tileSize + _middleOffset.y, z);
+            return new Vector3((col) * tileSize - _middleOffset.x, (level.height - row) * -tileSize + _middleOffset.y, z);
         }
         #endregion
 
