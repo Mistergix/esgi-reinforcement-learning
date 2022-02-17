@@ -13,6 +13,10 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         public Coords end = new Coords(4, 0);
         public List<Coords> bombs;
         public List<Coords> energy;
+        public float bombValue = -100000f;
+        public float energyValue = 1000f;
+        public float endValue = 10000f;
+        public float blankValue = -10f ;
     }
     
     [Serializable]
