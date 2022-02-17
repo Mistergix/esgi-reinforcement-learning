@@ -35,6 +35,12 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         public int endTile;
         public GameObject endPrefabs;
 
+        public GameObject noDirPrefabs;
+        public GameObject upDirPrefabs;
+        public GameObject rightDirPrefabs;
+        public GameObject leftDirPrefabs;
+        public GameObject downDirPrefabs;
+
         public float tileSize;
 
         #endregion
@@ -47,6 +53,8 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         private HashSet<Coords> _energies;
 
         private GameObject player;
+
+        private GameObject[,] dirOnTile;
 
 
         #endregion
@@ -91,6 +99,48 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             _statesDictionary = CreateStates();
             var agent = new QAgentGridWorldConsole(this, new List<QStateGridWorldConsole>(_statesDictionary.Values.ToList()), actions, _statesDictionary[level.start]);
             return agent;
+        }
+
+        protected override void CustomUpdate()
+        {
+            foreach (var state in States)
+            {
+                var Action = GetBestAction(state);
+                Destroy(dirOnTile[state.Coords.y + 1, state.Coords.x + 1]);
+
+                GameObject chosenPrefabs;
+                switch (Action.Name)
+                {
+                    case "Go up":
+                        chosenPrefabs = upDirPrefabs;
+                        break;
+
+                    case "Go Down":
+                        chosenPrefabs = downDirPrefabs;
+                        break;
+
+                    case "Go Left":
+                        chosenPrefabs = leftDirPrefabs;
+                        break;
+
+                    case "Go Right":
+                        chosenPrefabs = rightDirPrefabs;
+                        break;
+                    default:
+                        chosenPrefabs = noDirPrefabs;
+                        break;
+                }
+
+                dirOnTile[state.Coords.y + 1, state.Coords.x + 1] = Instantiate(chosenPrefabs, new Vector3(0, 0, -0.03f), chosenPrefabs.transform.rotation);
+                dirOnTile[state.Coords.y + 1, state.Coords.x + 1].transform.position = GetScreenPointFromLevelIndices(state.Coords.y + 1, state.Coords.x + 1, -0.04f);
+                dirOnTile[state.Coords.y + 1, state.Coords.x + 1].transform.localScale *= tileSize;
+                dirOnTile[state.Coords.y + 1, state.Coords.x + 1].name = "2dir" + (state.Coords.y).ToString() + "_" + (state.Coords.x).ToString();
+
+            }
+
+
+            
+            
         }
 
 
@@ -218,6 +268,8 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             GameObject bombs;
             GameObject end;
 
+            dirOnTile = new GameObject[_rows, _cols];
+
             int destinationCount = 0;
             for (int i = 0; i < _rows; i++)
             {
@@ -228,9 +280,15 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
                     if (val != wallTile)
                     {
                         tile = Instantiate(groundPrefabs, new Vector3(0, 0, 0), Quaternion.identity);
+                        dirOnTile[i, j] = Instantiate(noDirPrefabs, new Vector3(0, 0, -0.03f), Quaternion.identity);
+
                         tile.name = "tile" + (i - 1).ToString() + "_" + (j - 1).ToString();
                         tile.transform.localScale *= tileSize;
                         tile.transform.position = GetScreenPointFromLevelIndices(i, j, 0);
+
+                        dirOnTile[i, j].transform.position = GetScreenPointFromLevelIndices(i, j, -0.03f);
+                        dirOnTile[i, j].transform.localScale *= tileSize;
+                        dirOnTile[i, j].name = "1dir" + (i - 1).ToString() + "_" + (j - 1).ToString();
                         if (val == endTile)
                         {
                             end = Instantiate(endPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
@@ -244,20 +302,20 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
                             {
                                 player = Instantiate(playerPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
                                 player.transform.localScale *= tileSize;
-                                player.transform.position = GetScreenPointFromLevelIndices(i, j, -0.2f);
+                                player.transform.position = GetScreenPointFromLevelIndices(i, j, -0.02f);
                             }
                             else if (val == bombsTile)
                             {
                                 bombs = Instantiate(bombsPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
                                 bombs.transform.localScale *= tileSize;
-                                bombs.transform.position = GetScreenPointFromLevelIndices(i, j, -0.2f);
+                                bombs.transform.position = GetScreenPointFromLevelIndices(i, j, -0.02f);
                             }
 
                             else if (val == energyTile)
                             {
                                 energy = Instantiate(energyPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
                                 energy.transform.localScale *= tileSize;
-                                energy.transform.position = GetScreenPointFromLevelIndices(i, j, -0.2f);
+                                energy.transform.position = GetScreenPointFromLevelIndices(i, j, -0.02f);
                             }
                         }
                     }
