@@ -48,13 +48,15 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         private int _rows, _cols;
         private int[,] _levelData;
         private Vector2 _middleOffset = new Vector2();
-        private Dictionary<Coords,QStateGridWorldConsole> _statesDictionary;
+        private Dictionary<Coords, QStateGridWorldConsole> _statesDictionary;
         private HashSet<Coords> _bombs;
         private HashSet<Coords> _energies;
 
         private GameObject player;
 
         private GameObject[,] dirOnTile;
+        private HashSet<GameObject> bombs;
+        private HashSet<GameObject> energies;
 
 
         #endregion
@@ -131,10 +133,38 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
                 dirOnTile[state.Coords.y + 1, state.Coords.x + 1].name = "2dir" + (state.Coords.y).ToString() + "_" + (state.Coords.x).ToString();
 
             }
-
-
             
-            
+
+            foreach (GameObject gameObject in energies)
+            {
+                Destroy(gameObject);    
+            }
+
+            GameObject energy;
+
+            foreach (Coords coords in _energies)
+            {
+                energy = Instantiate(energyPrefabs, new Vector3(0, 0, 0), Quaternion.identity);
+                energy.transform.localScale *= tileSize;
+                energy.transform.position = GetScreenPointFromLevelIndices(coords.y + 1, coords.x + 1, -0.02f);
+                energies.Add(energy);
+            }
+
+            foreach (GameObject gameObject in bombs)
+            {
+                Destroy(gameObject);
+            }
+
+            GameObject bomb;
+
+            foreach (Coords coords in _bombs)
+            {
+                bomb = Instantiate(bombsPrefabs, new Vector3(0, 0, 0), Quaternion.identity);
+                bomb.transform.localScale *= tileSize;
+                bomb.transform.position = GetScreenPointFromLevelIndices(coords.y + 1, coords.x + 1, -0.02f);
+                bombs.Add(bomb);
+            }
+
         }
 
 
@@ -259,10 +289,12 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             _middleOffset.y = _rows * tileSize * 0.5f - tileSize * 0.5f;
             GameObject tile;
             GameObject energy;
-            GameObject bombs;
+            GameObject bomb;
             GameObject end;
 
             dirOnTile = new GameObject[_rows, _cols];
+            bombs = new HashSet<GameObject>();
+            energies = new HashSet<GameObject>();
 
             int destinationCount = 0;
             for (int i = 0; i < _rows; i++)
@@ -300,9 +332,10 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
                             }
                             else if (val == bombsTile)
                             {
-                                bombs = Instantiate(bombsPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
-                                bombs.transform.localScale *= tileSize;
-                                bombs.transform.position = GetScreenPointFromLevelIndices(i, j, -0.02f);
+                                bomb = Instantiate(bombsPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
+                                bomb.transform.localScale *= tileSize;
+                                bomb.transform.position = GetScreenPointFromLevelIndices(i, j, -0.02f);
+                                bombs.Add(bomb);
                             }
 
                             else if (val == energyTile)
@@ -310,6 +343,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
                                 energy = Instantiate(energyPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
                                 energy.transform.localScale *= tileSize;
                                 energy.transform.position = GetScreenPointFromLevelIndices(i, j, -0.02f);
+                                energies.Add(energy);
                             }
                         }
                     }

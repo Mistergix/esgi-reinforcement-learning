@@ -346,7 +346,7 @@ MonoBehaviour:
   learningRate: 0.3
   discountRate: 0.3
   epsilonGreedyInitialRate: 0.3
-  waitTimeTrain: 0
+  waitTimeTrain: 0.05
   waitTimeRun: 0
   level: {fileID: 11400000, guid: 71be88daf6b477c46b6defa4285fbfe2, type: 2}
   cam: {fileID: 966608460}
