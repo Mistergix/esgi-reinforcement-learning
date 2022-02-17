@@ -1,11 +1,9 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PGSauce.Core.PGDebugging;
 using PGSauce.Core.Utilities;
 using PGSauce.Games.IaEsgi.Ia;
-using PGSauce.Unity;
 
 namespace PGSauce.Games.IaEsgi.GridWorldConsole
 {
@@ -50,7 +48,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         private Vector2 _middleOffset = new Vector2();
         private Dictionary<Coords, QStateGridWorldConsole> _statesDictionary;
         private HashSet<Coords> _bombs;
-        private HashSet<Coords> _energies;
+        private HashSet<Coords> _energiesCoords;
 
         private GameObject player;
 
@@ -76,7 +74,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
 
         protected override void ResetForNewEpoch()
         {
-            _energies = new HashSet<Coords>(level.energy);
+            _energiesCoords = new HashSet<Coords>(level.energy);
             _bombs = new HashSet<Coords>(level.bombs);
         }
 
@@ -148,7 +146,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
 
             GameObject energy;
 
-            foreach (Coords coords in _energies)
+            foreach (Coords coords in _energiesCoords)
             {
                 energy = Instantiate(energyPrefabs, new Vector3(0, 0, 0), Quaternion.identity);
                 energy.transform.localScale *= tileSize;

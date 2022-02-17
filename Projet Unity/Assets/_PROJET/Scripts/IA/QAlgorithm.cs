@@ -101,6 +101,13 @@ namespace PGSauce.Games.IaEsgi.Ia
 
         protected abstract void ResetAgentForTraining();
         protected abstract QAction<TAgent, TState> GetBestAction();
+        
+        protected abstract void ResetTrainedAgent();
+
+        protected virtual List<QAction<TAgent, TState>> GetAvailableActionsFromState(TState state)
+        {
+            return Actions;
+        }
 
         #endregion
         #region Private Methods
@@ -161,8 +168,6 @@ namespace PGSauce.Games.IaEsgi.Ia
 
             _isRunning = false;
         }
-
-        protected abstract void ResetTrainedAgent();
 
         private void UpdateEpsilonGreedyRate()
         {
