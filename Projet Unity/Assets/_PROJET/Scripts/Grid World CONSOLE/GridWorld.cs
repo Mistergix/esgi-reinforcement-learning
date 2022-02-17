@@ -205,20 +205,20 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             {
                 PGDebug.Message($"{coords} is bomb").Log();
                 _bombs.Remove(coords);
-                return -10000f * factor;
+                return -100000f * factor;
             }
 
             if (_energies.Contains(coords))
             {
                 PGDebug.Message($"{coords} is energy").Log();
                 _energies.Remove(coords);
-                return 5f;
+                return 1000f;
             }
 
             if (level.end.Equals(coords))
             {
                 PGDebug.Message($"{coords} is end").Log();
-                return 1000f;
+                return 10000f;
             }
 
             PGDebug.Message($"{coords} is blank").Log();
