@@ -10,13 +10,14 @@ using Random = UnityEngine.Random;
 
 namespace PGSauce.Games.IaEsgi.Ia
 {
-    public abstract class QAlgorithm<TAgent, TState> : PGMonoBehaviour where TAgent : QAgentBase where TState : QState
+    public abstract class QAlgorithm<TAgent, TState> : AlgorithmBase where TAgent : QAgentBase where TState : QState
     {
         #region Public And Serialized Fields
         [SerializeField, Range(0,1)] private float learningRate;
         [SerializeField, Range(0,1)] private float discountRate;
         [SerializeField, Range(0,1)] private float epsilonGreedyInitialRate;
-        [SerializeField, Min(1)] private int maxEpochs = 10;
+        [SerializeField, UnityEngine.Min(0)] private float waitTimeTrain;
+        [SerializeField, Min(0)] private float waitTimeRun;
         #endregion
         #region Private Fields
         private Float01 _epsilonGreedyRate;
@@ -96,9 +97,10 @@ namespace PGSauce.Games.IaEsgi.Ia
         {
             CustomBeforeExecute();
 
-            for (int i = 0; i < maxEpochs; i++)
+            for (int i = 0; i < MaxEpochs; i++)
             {
-                PGDebug.Message($"------------------NEW EPOCH {i + 1}---------------------").Log();
+                CurrentEpoch = i + 1;
+                PGDebug.Message($"------------------NEW EPOCH {CurrentEpoch}---------------------").Log();
                 ResetForNewEpoch();
                 ResetAgent();
                 while (ContinueToRunAlgorithmForThisEpoch(Agent.CurrentState))
@@ -109,8 +111,10 @@ namespace PGSauce.Games.IaEsgi.Ia
                     CustomUpdateAfterAgentDoesAction(action);
                     CustomUpdate();
                     PGDebug.Message($"---------------------").Log();
-                    yield return new WaitForEndOfFrame();
+                    yield return new WaitForSeconds(waitTimeTrain);
                 }
+
+                yield return new WaitForSeconds(waitTimeTrain * 5);
             }
 
             CustomAfterTrain();
@@ -123,7 +127,7 @@ namespace PGSauce.Games.IaEsgi.Ia
                 var action = GetBestAction();
                 Agent.TakeAction(action);
                 PGDebug.Message($"---------------------").Log();
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(waitTimeRun);
             }
         }
 
