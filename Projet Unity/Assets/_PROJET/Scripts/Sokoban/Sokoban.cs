@@ -22,7 +22,7 @@ namespace PGSauce.Games.IaEsgi.Sokoban
         public Color objectifColor;
         public Color WallColor;
 
-        public GameObject tilePrefabs;
+        public GameObject groundPrefabs;
         public GameObject playerPrefabs;
         public GameObject caissePrefabs;
         public GameObject objectifPrefabs;
@@ -144,7 +144,7 @@ namespace PGSauce.Games.IaEsgi.Sokoban
                     if (val != wallTile)
                     {
                         //tile = new GameObject("tile" + i.ToString() + "_" + j.ToString());//create new tile
-                        tile = Instantiate(tilePrefabs , new Vector3(0, 0, 0), Quaternion.identity);
+                        tile = Instantiate(groundPrefabs , new Vector3(0, 0, 0), Quaternion.identity);
                         tile.name = "tile" + i.ToString() + "_" + j.ToString();
                         tile.transform.localScale *= tileSize;//set tile size
                         //sr = tile.AddComponent<SpriteRenderer>();//add a sprite renderer

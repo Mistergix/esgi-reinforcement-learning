@@ -67,17 +67,29 @@ namespace PGSauce.Games.IaEsgi.Ia
         #region Public Methods
         protected abstract bool ContinueToRunAlgorithmForThisEpoch(TState agentCurrentState);
         protected abstract void ResetForNewEpoch();
+        
+        protected abstract void CustomInit();
+
+        protected abstract QAgent<TAgent, TState> CreateAgent();
+        
+        protected abstract void CustomUpdateAfterAgentDoesAction(QAction<TAgent, TState> action);
+
+        protected abstract void CustomAfterTrain();
+
+        protected abstract void CustomBeforeExecute();
+
+        protected abstract void ResetAgent();
+        protected abstract QAction<TAgent, TState> GetBestAction();
 
         #endregion
         #region Private Methods
         
         private void Run()
         {
+            CustomInit();
             Agent = CreateAgent();
             StartCoroutine(Execute());
         }
-
-        protected abstract QAgent<TAgent, TState> CreateAgent();
 
         private IEnumerator Execute()
         {
@@ -113,14 +125,6 @@ namespace PGSauce.Games.IaEsgi.Ia
             }
         }
 
-        protected abstract void CustomUpdateAfterAgentDoesAction(QAction<TAgent, TState> action);
-
-        protected abstract void CustomAfterTrain();
-
-        protected abstract void CustomBeforeExecute();
-
-        protected abstract void ResetAgent();
-
         private void UpdateEpsilonGreedyRate()
         {
             PGDebug.Message("DO epsilon greed decay").LogTodo();
@@ -138,8 +142,6 @@ namespace PGSauce.Games.IaEsgi.Ia
             PGDebug.Message($"EXPLOITATION").Log();
             return GetBestAction();
         }
-
-        protected abstract QAction<TAgent, TState> GetBestAction();
         #endregion
     }
 }

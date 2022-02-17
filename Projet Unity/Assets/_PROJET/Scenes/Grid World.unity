@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -268,7 +268,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -293,7 +293,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966608458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -346,3 +346,17 @@ MonoBehaviour:
   discountRate: 0.3
   epsilonGreedyInitialRate: 0.3
   level: {fileID: 11400000, guid: 71be88daf6b477c46b6defa4285fbfe2, type: 2}
+  cam: {fileID: 966608460}
+  groundTile: 1
+  groundPrefabs: {fileID: 5676718401400714894, guid: 3fc4a63abb4908144b550b634d776ebd, type: 3}
+  playerTile: 4
+  playerPrefabs: {fileID: 3769980334219109173, guid: 5fe208c829bc6b045a255375ab9debdc, type: 3}
+  bombsTile: 3
+  bombsPrefabs: {fileID: 1673507355094916005, guid: 10e7dab45b0632b4293025b99275357b, type: 3}
+  energyTile: 2
+  energyPrefabs: {fileID: 2884462496024107103, guid: 53c575486dd65804f8b4cda7c01ebdd9, type: 3}
+  wallTile: -1
+  wallPrefabs: {fileID: 2700957900612381783, guid: 8315cd21aa09add4190800895d351139, type: 3}
+  endTile: 0
+  endPrefabs: {fileID: 7349664745548654002, guid: 591f6b5a04d821940a846791974b4c53, type: 3}
+  tileSize: 2

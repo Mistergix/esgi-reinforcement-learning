@@ -13,23 +13,53 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
     {
         #region Public And Serialized Fields
         [SerializeField] private GridWorldConsoleData level;
+
+        [SerializeField]
+        private Camera cam;
+
+        public int groundTile;
+        public GameObject groundPrefabs;
+
+        public int playerTile;
+        public GameObject playerPrefabs;
+
+        public int bombsTile;
+        public GameObject bombsPrefabs;
+
+        public int energyTile;
+        public GameObject energyPrefabs;
+
+        public int wallTile;
+        public GameObject wallPrefabs;
+
+        public int endTile;
+        public GameObject endPrefabs;
+
+        public float tileSize;
+
+        #endregion
+        #region Private Fields
+        private int _rows, _cols;
+        private int[,] _levelData;
+        private Vector2 _middleOffset = new Vector2();
         private Dictionary<Coords,QStateGridWorldConsole> _statesDictionary;
         private HashSet<Coords> _bombs;
         private HashSet<Coords> _energies;
 
-        #endregion
-        #region Private Fields
+
         #endregion
         #region Properties
         #endregion
         #region Public Methods
-        #endregion
-        #region Private Methods
-        #endregion
-
         protected override bool ContinueToRunAlgorithmForThisEpoch(QStateGridWorldConsole state)
         {
             return !state.Equals(_statesDictionary[level.end]);
+        }
+
+        protected override void CustomInit()
+        {
+            ParseLevel();
+            CreateLevel();
         }
 
         protected override void ResetForNewEpoch()
@@ -49,28 +79,12 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             var actionDown = new QActionGridWorldConsole(agent => agent.GoDown(), "Go Down");
             var actionLeft = new QActionGridWorldConsole(agent => agent.GoLeft(), "Go Left");
             var actionRight = new QActionGridWorldConsole(agent => agent.GoRight(), "Go Right");
-            var actions = new List<QAction<QAgentGridWorldConsole, QStateGridWorldConsole>> {actionDown, actionUp, actionRight, actionLeft};
+            var actions = new List<QAction<QAgentGridWorldConsole, QStateGridWorldConsole>> { actionDown, actionUp, actionRight, actionLeft };
             _statesDictionary = CreateStates();
             var agent = new QAgentGridWorldConsole(this, new List<QStateGridWorldConsole>(_statesDictionary.Values.ToList()), actions, _statesDictionary[level.start]);
             return agent;
         }
-
-        private Dictionary<Coords, QStateGridWorldConsole> CreateStates()
-        {
-            var states = new Dictionary<Coords, QStateGridWorldConsole>();
-            for (var i = 0; i < level.width; i++)
-            {
-                for (var j = 0; j < level.height; j++)
-                {
-                    var coords = new Coords(i, j);
-                    var state = new QStateGridWorldConsole(coords);
-                    states.Add(coords, state);
-                }
-            }
-
-            return states;
-        }
-
+        
         public QStateGridWorldConsole GoUp()
         {
             return Move(new Coords(0, 1));
@@ -91,23 +105,6 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             return Move(new Coords(1, 0));
         }
         
-        private bool IsInBounds(Coords nextCoords)
-        {
-            return nextCoords.x.IsBetween(0, level.width - 1) && nextCoords.y.IsBetween(0, level.height - 1);
-        }
-        
-        private QStateGridWorldConsole Move(Coords offset)
-        {
-            var currenState = Agent.CurrentState;
-            var nextCoords = currenState.Coords + offset;
-            if (IsInBounds(nextCoords))
-            {
-                return _statesDictionary[nextCoords];
-            }
-
-            return Agent.CurrentState;
-        }
-
         public float GetTileValue(Coords coords)
         {
             var factor = coords.Equals(Agent.OldState.Coords) ? 2 : 1;
@@ -134,5 +131,146 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             PGDebug.Message($"{coords} is blank").Log();
             return -1f * factor;
         }
+        #endregion
+        #region Private Methods
+        private Dictionary<Coords, QStateGridWorldConsole> CreateStates()
+        {
+            var states = new Dictionary<Coords, QStateGridWorldConsole>();
+            for (var i = 0; i < level.width; i++)
+            {
+                for (var j = 0; j < level.height; j++)
+                {
+                    var coords = new Coords(i, j);
+                    var state = new QStateGridWorldConsole(coords);
+                    states.Add(coords, state);
+                }
+            }
+
+            return states;
+        }
+
+        private bool IsInBounds(Coords nextCoords)
+        {
+            return nextCoords.x.IsBetween(0, level.width - 1) && nextCoords.y.IsBetween(0, level.height - 1);
+        }
+
+        private QStateGridWorldConsole Move(Coords offset)
+        {
+            var currenState = Agent.CurrentState;
+            var nextCoords = currenState.Coords + offset;
+            if (IsInBounds(nextCoords))
+            {
+                return _statesDictionary[nextCoords];
+            }
+
+            return Agent.CurrentState;
+        }
+
+       
+
+        private void ParseLevel()
+        {
+            cam.orthographicSize = level.height;
+            _rows = level.height;
+            _cols = level.width;
+            _levelData = new int[_rows, _cols];
+            for (int i = 0; i < _rows; i++)
+            {
+                for (int j = 0; j < _cols; j++)
+                {
+                    if (i == 0 || j == 0 || i == _rows - 1 || j == _cols - 1)
+                        _levelData[i, j] = wallTile;
+                    else
+                        _levelData[i, j] = groundTile;
+                }
+            }
+
+            foreach (Coords coords in level.bombs)
+            {
+                _levelData[coords.x, coords.y] = bombsTile;
+            }
+
+            foreach (Coords coords in level.energy)
+            {
+                _levelData[coords.x, coords.y] = energyTile;
+            }
+
+            _levelData[level.start.x, level.start.y] = playerTile;
+            _levelData[level.end.x, level.end.y] = endTile;
+
+        }
+
+        private void CreateLevel()
+        {
+            _middleOffset.x = _cols * tileSize * 0.5f - tileSize * 0.5f;
+            _middleOffset.y = _rows * tileSize * 0.5f - tileSize * 0.5f;
+            GameObject tile;
+            SpriteRenderer sr;
+            GameObject energy;
+            GameObject bombs;
+            GameObject end;
+            GameObject player;
+
+            int destinationCount = 0;
+            for (int i = 0; i < _rows; i++)
+            {
+                for (int j = 0; j < _cols; j++)
+                {
+                    int val = _levelData[i, j];
+
+                    if (val != wallTile)
+                    {
+                        tile = Instantiate(groundPrefabs, new Vector3(0, 0, 0), Quaternion.identity);
+                        tile.name = "tile" + i.ToString() + "_" + j.ToString();
+                        tile.transform.localScale *= tileSize;
+                        tile.transform.position = GetScreenPointFromLevelIndices(i, j, 0);
+                        if (val == endTile)
+                        {
+                            end = Instantiate(endPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
+                            end.transform.localScale *= tileSize;
+                            end.transform.position = GetScreenPointFromLevelIndices(i, j, -0.1f);
+                        }
+                        else
+                        {
+
+                            if (val == playerTile)
+                            {
+                                player = Instantiate(playerPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
+                                player.transform.localScale *= tileSize;
+                                player.transform.position = GetScreenPointFromLevelIndices(i, j, -0.2f);
+                            }
+                            else if (val == bombsTile)
+                            {
+                                bombs = Instantiate(bombsPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
+                                bombs.transform.localScale *= tileSize;
+                                bombs.transform.position = GetScreenPointFromLevelIndices(i, j, -0.2f);
+                            }
+
+                            else if (val == energyTile)
+                            {
+                                energy = Instantiate(energyPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);
+                                energy.transform.localScale *= tileSize;
+                                energy.transform.position = GetScreenPointFromLevelIndices(i, j, -0.2f);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        tile = Instantiate(wallPrefabs, new Vector3(0, 0, 0), Quaternion.identity);
+                        tile.transform.localScale *= tileSize;
+                        tile.transform.position = GetScreenPointFromLevelIndices(i, j, 0);
+                    }
+                }
+            }
+        }
+
+        private Vector3 GetScreenPointFromLevelIndices(int row, int col, float z)
+        {
+            //converting indices to position values, col determines x & row determine y
+            return new Vector3(col * tileSize - _middleOffset.x, row * -tileSize + _middleOffset.y, z);
+        }
+        #endregion
+
     }
+
 }
