@@ -345,6 +345,7 @@ MonoBehaviour:
   learningRate: 0.3
   discountRate: 0.3
   epsilonGreedyInitialRate: 0.3
+  maxEpochs: 10
   level: {fileID: 11400000, guid: 71be88daf6b477c46b6defa4285fbfe2, type: 2}
   cam: {fileID: 966608460}
   groundTile: 1
@@ -359,4 +360,9 @@ MonoBehaviour:
   wallPrefabs: {fileID: 2700957900612381783, guid: 8315cd21aa09add4190800895d351139, type: 3}
   endTile: 0
   endPrefabs: {fileID: 7349664745548654002, guid: 591f6b5a04d821940a846791974b4c53, type: 3}
+  noDirPrefabs: {fileID: 8476676273439526866, guid: 5123299bec499b146926090e137fa657, type: 3}
+  upDirPrefabs: {fileID: 900602977650069580, guid: 9f1b7fe1a7f01ca40bc182100a7bae3d, type: 3}
+  rightDirPrefabs: {fileID: 2919919954622791848, guid: 1288361545bfa654ea15925263c41f3c, type: 3}
+  leftDirPrefabs: {fileID: 6596124319814260878, guid: 0e8c37c14bb9eeb4c9ee2cd23852590f, type: 3}
+  downDirPrefabs: {fileID: 3534167831235413515, guid: 6b31dfa6e53a447498e19ab11db295f5, type: 3}
   tileSize: 2

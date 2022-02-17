@@ -35,6 +35,12 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         public int endTile;
         public GameObject endPrefabs;
 
+        public GameObject noDirPrefabs;
+        public GameObject upDirPrefabs;
+        public GameObject rightDirPrefabs;
+        public GameObject leftDirPrefabs;
+        public GameObject downDirPrefabs;
+
         public float tileSize;
 
         #endregion
@@ -47,6 +53,8 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         private HashSet<Coords> _energies;
 
         private GameObject player;
+
+        private GameObject[,] dirOnTile;
 
 
         #endregion
@@ -85,6 +93,14 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             _statesDictionary = CreateStates();
             var agent = new QAgentGridWorldConsole(this, new List<QStateGridWorldConsole>(_statesDictionary.Values.ToList()), actions, _statesDictionary[level.start]);
             return agent;
+        }
+
+        protected override void CustomUpdate()
+        {
+            GetBestAction();
+
+            Destroy(dirOnTile[0, 0]);
+            dirOnTile[0, 0] = Instantiate(noDirPrefabs, new Vector3(0, 0, -0.03f), Quaternion.identity);
         }
 
 
@@ -212,6 +228,8 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             GameObject bombs;
             GameObject end;
 
+            dirOnTile = new GameObject[_rows, _cols];
+
             int destinationCount = 0;
             for (int i = 0; i < _rows; i++)
             {
@@ -222,9 +240,14 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
                     if (val != wallTile)
                     {
                         tile = Instantiate(groundPrefabs, new Vector3(0, 0, 0), Quaternion.identity);
+                        dirOnTile[i, j] = Instantiate(noDirPrefabs, new Vector3(0, 0, -0.03f), Quaternion.identity);
+
                         tile.name = "tile" + (i - 1).ToString() + "_" + (j - 1).ToString();
                         tile.transform.localScale *= tileSize;
                         tile.transform.position = GetScreenPointFromLevelIndices(i, j, 0);
+
+                        dirOnTile[i, j].transform.position = GetScreenPointFromLevelIndices(i, j, -0.03f);
+                        dirOnTile[i, j].transform.localScale *= tileSize;
                         if (val == endTile)
                         {
                             end = Instantiate(endPrefabs, new Vector3(0, 0, -0.01f), Quaternion.identity);

@@ -73,6 +73,8 @@ namespace PGSauce.Games.IaEsgi.Ia
         
         protected abstract void CustomUpdateAfterAgentDoesAction(QAction<TAgent, TState> action);
 
+        protected abstract void CustomUpdate();
+
         protected abstract void CustomAfterTrain();
 
         protected abstract void CustomBeforeExecute();
@@ -105,6 +107,7 @@ namespace PGSauce.Games.IaEsgi.Ia
                     UpdateEpsilonGreedyRate();
                     Agent.TakeAction(action);
                     CustomUpdateAfterAgentDoesAction(action);
+                    CustomUpdate();
                     PGDebug.Message($"---------------------").Log();
                     yield return new WaitForEndOfFrame();
                 }
