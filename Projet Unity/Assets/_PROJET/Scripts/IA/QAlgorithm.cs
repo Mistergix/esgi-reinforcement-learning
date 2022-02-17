@@ -20,7 +20,6 @@ namespace PGSauce.Games.IaEsgi.Ia
         #endregion
         #region Private Fields
         private Float01 _epsilonGreedyRate;
-
         #endregion
         #region Properties
 
