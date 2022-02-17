@@ -51,6 +51,38 @@ MonoBehaviour:
     LoadingType: 0
     FakeLoadingTime: 2
     Backgrounds: []
+  - SceneName: -1_Startup
+    SceneAsset: {fileID: 102900000, guid: 8543583ae58555a428bb56ab59b57e13, type: 3}
+    DisplayName: -1_Startup
+    Description: 
+    SkipType: 3
+    LoadingType: 0
+    FakeLoadingTime: 2
+    Backgrounds: []
+  - SceneName: 0_Game Chooser
+    SceneAsset: {fileID: 102900000, guid: 4a3ad136f67e7014f80758640a5d4e8a, type: 3}
+    DisplayName: 0_Game Chooser
+    Description: 
+    SkipType: 3
+    LoadingType: 0
+    FakeLoadingTime: 2
+    Backgrounds: []
+  - SceneName: Grid World
+    SceneAsset: {fileID: 102900000, guid: 4ee3f0b8bf53cfb44910379f755533ae, type: 3}
+    DisplayName: Grid World
+    Description: 
+    SkipType: 3
+    LoadingType: 0
+    FakeLoadingTime: 2
+    Backgrounds: []
+  - SceneName: Sokoban
+    SceneAsset: {fileID: 102900000, guid: da2d9e53d90916140aef1ab99dac9031, type: 3}
+    DisplayName: Sokoban
+    Description: 
+    SkipType: 3
+    LoadingType: 0
+    FakeLoadingTime: 2
+    Backgrounds: []
   tipsList:
   - Create beautiful loading screens for improved your game
   - Easy to use and implement
