@@ -27,7 +27,12 @@ namespace PGSauce.Games.IaEsgi.Ia
 
         protected override QAction<TAgent, TState> GetBestAction()
         {
-            return GetMaxByProperty(Actions, action => _qTable.EvaluateAction(action, Agent.CurrentState));
+            return GetBestAction(Agent.CurrentState);
+        }
+
+        protected QAction<TAgent, TState> GetBestAction(TState state)
+        {
+            return GetMaxByProperty(Actions, action => _qTable.EvaluateAction(action, state));
         }
 
         private T GetMaxByProperty<T>(IEnumerable<T> list, Func<T, float> evaluator)
