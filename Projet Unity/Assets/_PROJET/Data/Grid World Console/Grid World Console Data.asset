@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 942a3a61686c48eaa3e41270c53ad99d, type: 3}
   m_Name: Grid World Console Data
   m_EditorClassIdentifier: 
-  width: 6
-  height: 5
+  width: 10
+  height: 10
   start:
-    x: 0
+    x: 1
     y: 4
   end:
     x: 4
-    y: 0
-  bombs:
-  - x: 0
     y: 1
+  bombs:
+  - x: 1
+    y: 2
   - x: 1
     y: 3
   - x: 3
@@ -31,7 +31,7 @@ MonoBehaviour:
     y: 3
   energy:
   - x: 1
-    y: 0
+    y: 1
   - x: 2
     y: 2
   - x: 2
