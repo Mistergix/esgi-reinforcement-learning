@@ -13,16 +13,13 @@ namespace PGSauce.Games.IaEsgi.Ia
     public abstract class QAlgorithm<TAgent, TState> : PGMonoBehaviour where TAgent : QAgentBase where TState : QState
     {
         #region Public And Serialized Fields
-        [SerializeField] private float learningRate;
-        [SerializeField] private float discountRate;
+        [SerializeField, Range(0,1)] private float learningRate;
+        [SerializeField, Range(0,1)] private float discountRate;
         [SerializeField, Range(0,1)] private float epsilonGreedyInitialRate;
         #endregion
         #region Private Fields
         private Float01 _epsilonGreedyRate;
-        private List<QState> _states;
-        private List<QAction<TAgent, TState>> _actions;
         private QTable<TAgent, TState> _qTable;
-        private QAgent<TAgent, TState> _agent;
 
         #endregion
         #region Properties
@@ -31,15 +28,13 @@ namespace PGSauce.Games.IaEsgi.Ia
 
         public List<TState> States => Agent.States;
 
-        protected QAgent<TAgent, TState> Agent
-        {
-            get => _agent;
-            set => _agent = value;
-        }
+        protected QAgent<TAgent, TState> Agent { get; set; }
+
         #endregion
         #region Unity Functions
         public void Awake()
         {
+            PGDebug.Message($"AWAKE").Log();
             _epsilonGreedyRate = epsilonGreedyInitialRate;
             Run();
         }
@@ -66,7 +61,7 @@ namespace PGSauce.Games.IaEsgi.Ia
         
         #endregion
         #region Public Methods
-        protected abstract bool ContinueToRunAlgorithm();
+        protected abstract bool ContinueToRunAlgorithm(TState agentCurrentState);
         protected abstract void InitializeAlgorithm();
 
         #endregion
@@ -75,18 +70,20 @@ namespace PGSauce.Games.IaEsgi.Ia
         private void Run()
         {
             InitializeAlgorithm();
-            Execute();
+            StartCoroutine(Execute());
         }
 
-        private void Execute()
+        private IEnumerator Execute()
         {
             _qTable = new QTable<TAgent, TState>(Actions, States);
-            while (ContinueToRunAlgorithm())
+            while (ContinueToRunAlgorithm(Agent.CurrentState))
             {
                 var action = ChooseAction();
                 UpdateEpsilonGreedyRate();
                 Agent.TakeAction(action);
-                UpdateQTable();
+                UpdateQTable(action);
+                PGDebug.Message($"---------------------").Log();
+                yield return new WaitForEndOfFrame();
             }
         }
         
@@ -95,9 +92,18 @@ namespace PGSauce.Games.IaEsgi.Ia
             PGDebug.Message("DO epsilon greed decay").LogTodo();
         }
         
-        private void UpdateQTable()
+        private void UpdateQTable(QAction<TAgent, TState> qAction)
         {
-            PGDebug.Message("DO Update Q Table").LogTodo();
+            var old = _qTable.EvaluateAction(qAction, Agent.OldState);
+            var reward = Agent.GetCurrentReward();
+            var max = GetMaxQ(Agent.CurrentState);
+            var newValue = (1 - learningRate) * old + learningRate * reward + discountRate * max;
+            _qTable.UpdateValue(Agent.OldState, qAction, newValue);
+        }
+
+        private float GetMaxQ(TState state)
+        {
+            return Actions.Max(a => _qTable.EvaluateAction(a, state));
         }
 
         private QAction<TAgent, TState> ChooseAction()
@@ -105,9 +111,11 @@ namespace PGSauce.Games.IaEsgi.Ia
             var value = Random.value;
             if (value <= _epsilonGreedyRate)
             {
+                PGDebug.Message($"EXPLORATION").Log();
                 return Actions.GetRandomValue();
             }
-
+            
+            PGDebug.Message($"EXPLOITATION").Log();
             return GetMaxByProperty(Actions, action => _qTable.EvaluateAction(action, Agent.CurrentState));
         }
 

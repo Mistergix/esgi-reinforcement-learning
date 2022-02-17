@@ -32,5 +32,10 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         {
             return _gridWorld.GoRight();
         }
+
+        public override float GetCurrentReward()
+        {
+            return _gridWorld.GetTileValue(CurrentState.Coords);
+        }
     }
 }

@@ -36,5 +36,23 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         {
             return $"({x}, {y})";
         }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public bool Equals(Coords other)
+        {
+            return x == other.x && y == other.y;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (x * 397) ^ y;
+            }
+        }
     }
 }

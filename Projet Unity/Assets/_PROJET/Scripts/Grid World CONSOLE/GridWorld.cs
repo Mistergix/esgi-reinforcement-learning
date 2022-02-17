@@ -25,17 +25,17 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
         #region Private Methods
         #endregion
 
-        protected override bool ContinueToRunAlgorithm()
+        protected override bool ContinueToRunAlgorithm(QStateGridWorldConsole state)
         {
-            return Agent.CurrentState.Equals(_statesDictionary[level.end]);
+            return !state.Equals(_statesDictionary[level.end]);
         }
 
         protected override void InitializeAlgorithm()
         {
-            var actionUp = new QActionGridWorldConsole(agent => agent.GoUp());
-            var actionDown = new QActionGridWorldConsole(agent => agent.GoDown());
-            var actionLeft = new QActionGridWorldConsole(agent => agent.GoLeft());
-            var actionRight = new QActionGridWorldConsole(agent => agent.GoRight());
+            var actionUp = new QActionGridWorldConsole(agent => agent.GoUp(), "Go up");
+            var actionDown = new QActionGridWorldConsole(agent => agent.GoDown(), "Go Down");
+            var actionLeft = new QActionGridWorldConsole(agent => agent.GoLeft(), "Go Left");
+            var actionRight = new QActionGridWorldConsole(agent => agent.GoRight(), "Go Right");
             var actions = new List<QAction<QAgentGridWorldConsole, QStateGridWorldConsole>> {actionDown, actionUp, actionRight, actionLeft};
             _statesDictionary = CreateStates();
             Agent = new QAgentGridWorldConsole(this, new List<QStateGridWorldConsole>(_statesDictionary.Values.ToList()), actions, _statesDictionary[level.start]);
@@ -92,6 +92,31 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             }
 
             return Agent.CurrentState;
+        }
+
+        public float GetTileValue(Coords coords)
+        {
+            var factor = coords.Equals(Agent.OldState.Coords) ? 2 : 1;
+            if (level.bombs.Contains(coords))
+            {
+                PGDebug.Message($"{coords} is bomb").Log();
+                return -100f * factor;
+            }
+
+            if (level.energy.Contains(coords))
+            {
+                PGDebug.Message($"{coords} is energy").Log();
+                return 5f;
+            }
+
+            if (level.end.Equals(coords))
+            {
+                PGDebug.Message($"{coords} is end").Log();
+                return 1000f;
+            }
+
+            PGDebug.Message($"{coords} is blank").Log();
+            return -1f * factor;
         }
     }
 }

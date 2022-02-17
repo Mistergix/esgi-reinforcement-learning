@@ -5,7 +5,7 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
 {
     public class QActionGridWorldConsole : QAction<QAgentGridWorldConsole, QStateGridWorldConsole>
     {
-        public QActionGridWorldConsole(Func<QAgentGridWorldConsole, QStateGridWorldConsole> agent) : base(agent)
+        public QActionGridWorldConsole(Func<QAgentGridWorldConsole, QStateGridWorldConsole> agent, string name) : base(agent, name)
         {
         }
     }
