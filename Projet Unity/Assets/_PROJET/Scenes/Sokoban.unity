@@ -489,7 +489,7 @@ MonoBehaviour:
   ballSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   objectifColor: {r: 1, g: 0.756372, b: 0.61006284, a: 1}
   WallColor: {r: 0, g: 0, b: 0, a: 1}
-  groundPrefabs: {fileID: 0}
+  groundPrefabs: {fileID: 382208824797029986, guid: f58669b8f34896543a9c81b899eedf3e, type: 3}
   playerPrefabs: {fileID: 5606763262523975416, guid: e13bdf5e8250ee3479e61101382debb0, type: 3}
   caissePrefabs: {fileID: 1888910838045226584, guid: 3994827ccefb9874aae0349e9b895a52, type: 3}
   objectifPrefabs: {fileID: 6319884326049186822, guid: 6a479b55923eec742935206ee9246796, type: 3}
@@ -499,9 +499,10 @@ MonoBehaviour:
   objectifTile: 0
   playerTile: 3
   caisseTile: 2
+  caisseOnObjectifTile: 4
   playerOnDestinationTile: -3
   caisseOnDestinationTile: -2
-  userInputKeys: 11010000130100001201000014010000
+  userInputKeys: 12010000130100001101000014010000
   tileSize: 2
 --- !u!4 &1048670971
 Transform:
@@ -594,7 +595,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1299025934}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.79946154, y: 0, z: -23.189775}
+  m_LocalPosition: {x: 0, y: 2, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -296,7 +296,6 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             bombs = new HashSet<GameObject>();
             energies = new HashSet<GameObject>();
 
-            int destinationCount = 0;
             for (int i = 0; i < _rows; i++)
             {
                 for (int j = 0; j < _cols; j++)
