@@ -31,6 +31,11 @@ namespace PGSauce.Games.IaEsgi.Ia
             PGDebug.Message($"Current state is after action {CurrentState}").Log();
         }
 
-        public abstract float GetCurrentReward();
+        public abstract float GetCurrentReward(TState @from, TState to, QAction<TAgent, TState> policyAction);
+
+        public float GetCurrentReward(QAction<TAgent, TState> qAction)
+        {
+            return GetCurrentReward(OldState, CurrentState, qAction);
+        }
     }
 }

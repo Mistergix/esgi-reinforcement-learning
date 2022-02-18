@@ -308,7 +308,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1315660093}
-  - component: {fileID: 1315660094}
+  - component: {fileID: 1315660095}
   m_Layer: 0
   m_Name: GridWorld
   m_TagString: Untagged
@@ -330,7 +330,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1315660094
+--- !u!114 &1315660095
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,36 +339,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1315660092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76426f9aded5bb44280c7253877bdd67, type: 3}
+  m_Script: {fileID: 11500000, guid: 1fece039369d4447adada3e4aae1e3f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEpochs: 100
-  learningRate: 0.6
-  discountRate: 0.1
-  epsilonGreedyInitialRate: 0.3
-  waitTimeTrain: 0.05
-  waitTimeRun: 0.5
-  showTraining: 0
-  level: {fileID: 11400000, guid: 5d14a6b9f1acfbc4ea0e8dcc1dc89380, type: 2}
+  algorithm: {fileID: 11400000, guid: cdec2a781c5d0d041b960353883ee7d2, type: 2}
+  level: {fileID: 11400000, guid: d88a33532d0261b41b1ad1afbf4270ce, type: 2}
   cam: {fileID: 966608460}
-  groundTile: 1
+  groundTile: 0
   groundPrefabs: {fileID: 5676718401400714894, guid: 3fc4a63abb4908144b550b634d776ebd, type: 3}
-  playerTile: 4
+  playerTile: 1
   playerPrefabs: {fileID: 3769980334219109173, guid: 5fe208c829bc6b045a255375ab9debdc, type: 3}
-  bombsTile: 3
+  bombsTile: 2
   bombsPrefabs: {fileID: 1673507355094916005, guid: 10e7dab45b0632b4293025b99275357b, type: 3}
-  energyTile: 2
+  energyTile: 3
   energyPrefabs: {fileID: 2884462496024107103, guid: 53c575486dd65804f8b4cda7c01ebdd9, type: 3}
-  wallTile: -1
+  wallTile: 4
   wallPrefabs: {fileID: 2700957900612381783, guid: 8315cd21aa09add4190800895d351139, type: 3}
-  endTile: 0
+  endTile: 5
   endPrefabs: {fileID: 7349664745548654002, guid: 591f6b5a04d821940a846791974b4c53, type: 3}
+  tileSize: 2
   noDirPrefabs: {fileID: 8476676273439526866, guid: 5123299bec499b146926090e137fa657, type: 3}
   upDirPrefabs: {fileID: 900602977650069580, guid: 9f1b7fe1a7f01ca40bc182100a7bae3d, type: 3}
   rightDirPrefabs: {fileID: 2919919954622791848, guid: 1288361545bfa654ea15925263c41f3c, type: 3}
   leftDirPrefabs: {fileID: 6596124319814260878, guid: 0e8c37c14bb9eeb4c9ee2cd23852590f, type: 3}
   downDirPrefabs: {fileID: 3534167831235413515, guid: 6b31dfa6e53a447498e19ab11db295f5, type: 3}
-  tileSize: 2
 --- !u!1 &2101748132
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,6 +487,10 @@ PrefabInstance:
     - target: {fileID: 319020616166352934, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
       propertyPath: algo
       value: 
-      objectReference: {fileID: 1315660094}
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352934, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: game
+      value: 
+      objectReference: {fileID: 1315660095}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}

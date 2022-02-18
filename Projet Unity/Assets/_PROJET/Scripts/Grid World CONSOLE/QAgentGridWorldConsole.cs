@@ -5,9 +5,9 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
 {
     public class QAgentGridWorldConsole : QAgent<QAgentGridWorldConsole, QStateGridWorldConsole>
     {
-        private GridWorld _gridWorld;
+        private IGridWorldAi _gridWorld;
         
-        public QAgentGridWorldConsole(GridWorld gridWorld, List<QStateGridWorldConsole> states,
+        public QAgentGridWorldConsole(IGridWorldAi gridWorld, List<QStateGridWorldConsole> states,
             List<QAction<QAgentGridWorldConsole, QStateGridWorldConsole>> actions, QStateGridWorldConsole currentState) : base(states, actions, currentState)
         {
             _gridWorld = gridWorld;
@@ -33,9 +33,9 @@ namespace PGSauce.Games.IaEsgi.GridWorldConsole
             return _gridWorld.GoRight();
         }
 
-        public override float GetCurrentReward()
+        public override float GetCurrentReward(QStateGridWorldConsole @from, QStateGridWorldConsole to, QAction<QAgentGridWorldConsole, QStateGridWorldConsole> policyAction)
         {
-            return _gridWorld.GetTileValue(CurrentState.Coords);
+           return _gridWorld.GetTileValue(to.Coords);
         }
     }
 }
