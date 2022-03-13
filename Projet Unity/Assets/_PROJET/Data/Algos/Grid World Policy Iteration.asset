@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Grid World Policy Iteration
   m_EditorClassIdentifier: 
   maxEpochs: 100
-  learningRate: 0.6
-  discountRate: 0.2
-  epsilonGreedyInitialRate: 0.3
-  waitTimeTrain: 0.016666668
+  learningRate: 0.758
+  discountRate: 0.451
+  epsilonGreedyInitialRate: 0.605
+  waitTimeTrain: 1.08
   waitTimeRun: 0.5
   showTraining: 1
-  theta: 1
+  theta: 1.75
