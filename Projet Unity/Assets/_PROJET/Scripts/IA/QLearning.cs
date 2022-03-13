@@ -1,16 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PGSauce.Core.PGDebugging;
+using PGSauce.Core.Utilities;
+using PGSauce.Games.IaEsgi.GridWorldConsole;
+using Random = UnityEngine.Random;
 
 namespace PGSauce.Games.IaEsgi.Ia
 {
-    public abstract class QLearning<TAgent, TState> : QAlgorithm<TAgent, TState> where TAgent : QAgentBase where TState : QState
+    public abstract class QLearning<TGame, TAgent, TState> : RlAlgorithm<TGame, TAgent, TState> where TAgent : QAgentBase where TState : QState where TGame : MonoRlBase
     {
         #region Private Fields
         private QTable<TAgent, TState> _qTable;
         #endregion
 
-        protected sealed override void CustomBeforeExecute()
+        protected sealed override void CustomTrainEpoch()
+        {
+            var action = ChooseAction();
+            Agent.TakeAction(action);
+            UpdateQTable(action);
+        }
+
+        protected sealed override bool ContinueToRunAlgorithmForThisEpoch()
+        {
+            return !Agent.CurrentState.Equals(GoalState);
+        }
+
+        protected abstract TState GoalState { get; }
+
+        protected sealed override void CustomBeforeTrain()
+        {
+            _qTable = new QTable<TAgent, TState>(Actions, States);
+        }
+
+        protected override void AlgoCustomInit()
         {
             _qTable = new QTable<TAgent, TState>(Actions, States);
         }
@@ -20,31 +43,29 @@ namespace PGSauce.Games.IaEsgi.Ia
             _qTable.Print();
         }
 
-        protected sealed override void CustomUpdateAfterAgentDoesAction(QAction<TAgent, TState> action)
-        {
-            UpdateQTable(action);
-        }
-
-        protected override QAction<TAgent, TState> GetBestAction()
-        {
-            return GetBestAction(Agent.CurrentState);
-        }
-
-        protected QAction<TAgent, TState> GetBestAction(TState state)
+        public override QAction<TAgent, TState> GetBestAction(TState state)
         {
             return GetMaxByProperty(Actions, action => _qTable.EvaluateAction(action, state));
         }
 
-        private T GetMaxByProperty<T>(IEnumerable<T> list, Func<T, float> evaluator)
+        private QAction<TAgent, TState> ChooseAction()
         {
-            return list.Aggregate(((a1, a2) => evaluator(a1) > evaluator(a2) ? a1 : a2));
+            var value = Random.value;
+            if (value <= EpsilonGreedyRate)
+            {
+                PGDebug.Message($"EXPLORATION").Log();
+                return Actions.GetRandomValue();
+            }
+            
+            PGDebug.Message($"EXPLOITATION").Log();
+            return GetBestAction();
         }
-        
+
 
         private void UpdateQTable(QAction<TAgent, TState> qAction)
         {
             var old = _qTable.EvaluateAction(qAction, Agent.OldState);
-            var reward = Agent.GetCurrentReward();
+            var reward = Agent.GetCurrentReward(qAction);
             var max = GetMaxQ(Agent.CurrentState);
             var newValue = (1 - LearningRate) * old + LearningRate * reward + DiscountRate * max;
             _qTable.UpdateValue(Agent.OldState, qAction, newValue);
