@@ -1,7 +1,3 @@
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using PGSauce.Core.PGDebugging;
 using PGSauce.Games.IaEsgi.Ia;
 
 namespace PGSauce.Games.IaEsgi.Sokoban
