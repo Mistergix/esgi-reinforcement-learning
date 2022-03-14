@@ -15,6 +15,7 @@ namespace PGSauce.Games.IaEsgi.Sokoban
         public List<Coords> Caisses;
         public List<Coords> Objectifs;
         public List<Coords> Murs;
+        public float blankValue = -10f;
 
     }
 
@@ -28,6 +29,34 @@ namespace PGSauce.Games.IaEsgi.Sokoban
         {
             this.y = y;
             this.x = x;
+        }
+
+        public static Coords operator +(Coords a, Coords b)
+        {
+            return new Coords(a.x + b.x, a.y + b.y);
+        }
+
+        public override string ToString()
+        {
+            return $"({x}, {y})";
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public bool Equals(Coords other)
+        {
+            return x == other.x && y == other.y;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (x * 397) ^ y;
+            }
         }
     }
 }

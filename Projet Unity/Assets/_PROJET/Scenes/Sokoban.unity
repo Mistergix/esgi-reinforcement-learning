@@ -463,6 +463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1048670971}
   - component: {fileID: 1048670970}
+  - component: {fileID: 1048670972}
   m_Layer: 0
   m_Name: Sokoban
   m_TagString: Untagged
@@ -477,7 +478,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048670969}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3239e9065b99ab4cb7c5cb7c1b7dd2e, type: 3}
   m_Name: 
@@ -517,6 +518,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1048670972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048670969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee5b56b29e59a345a7dcee619118bca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  algorithm: {fileID: 11400000, guid: 374b65499621c6848b3693e46064a6a8, type: 2}
+  cam: {fileID: 1299025936}
+  level: {fileID: 11400000, guid: 3e0cce24a0944824cb9f74635f64cf4f, type: 2}
+  tileSprite: {fileID: 21300000, guid: 508a7439878cb470980c7c380e33c312, type: 3}
+  heroSprite: {fileID: 21300000, guid: 7c7d74dccb8dbeb41918ffe3004364f3, type: 3}
+  ballSprite: {fileID: 21300000, guid: 24748f38afc54904881aee4cf4fb28e0, type: 3}
+  objectifColor: {r: 1, g: 0.668856, b: 0.45911944, a: 0}
+  WallColor: {r: 0, g: 0, b: 0, a: 0}
+  groundPrefabs: {fileID: 382208824797029986, guid: f58669b8f34896543a9c81b899eedf3e, type: 3}
+  playerPrefabs: {fileID: 5606763262523975416, guid: e13bdf5e8250ee3479e61101382debb0, type: 3}
+  caissePrefabs: {fileID: 1888910838045226584, guid: 3994827ccefb9874aae0349e9b895a52, type: 3}
+  objectifPrefabs: {fileID: 6319884326049186822, guid: 6a479b55923eec742935206ee9246796, type: 3}
+  wallPrefabs: {fileID: 4294231509335371533, guid: 8dca1384cf1cd0f44958fce8b558864f, type: 3}
+  noDirPrefabs: {fileID: 8476676273439526866, guid: 5123299bec499b146926090e137fa657, type: 3}
+  upDirPrefabs: {fileID: 900602977650069580, guid: 9f1b7fe1a7f01ca40bc182100a7bae3d, type: 3}
+  rightDirPrefabs: {fileID: 2919919954622791848, guid: 1288361545bfa654ea15925263c41f3c, type: 3}
+  leftDirPrefabs: {fileID: 6596124319814260878, guid: 0e8c37c14bb9eeb4c9ee2cd23852590f, type: 3}
+  downDirPrefabs: {fileID: 3534167831235413515, guid: 6b31dfa6e53a447498e19ab11db295f5, type: 3}
+  wallTile: -1
+  groundTile: 1
+  objectifTile: 0
+  playerTile: 3
+  caisseTile: 2
+  playerOnDestinationTile: -3
+  caisseOnDestinationTile: -2
+  userInputKeys: 
+  tileSize: 2
 --- !u!1 &1299025934
 GameObject:
   m_ObjectHideFlags: 0

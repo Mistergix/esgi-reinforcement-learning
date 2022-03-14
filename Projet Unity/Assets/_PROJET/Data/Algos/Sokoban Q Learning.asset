@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22704bb24088452ca4b7c22cfbf39769, type: 3}
-  m_Name: Grid World Policy Iteration
+  m_Script: {fileID: 11500000, guid: b5115a752a7ee96438122f5d5d3f15ae, type: 3}
+  m_Name: Sokoban Q Learning
   m_EditorClassIdentifier: 
-  maxEpochs: 100
-  learningRate: 0.758
-  discountRate: 0.451
-  epsilonGreedyInitialRate: 0.605
-  waitTimeTrain: 1.08
+  maxEpochs: 10
+  learningRate: 0
+  discountRate: 0
+  epsilonGreedyInitialRate: 0
+  waitTimeTrain: 0.016666668
   waitTimeRun: 0.5
-  showTraining: 1
-  theta: 1.75
+  showTraining: 0
