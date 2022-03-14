@@ -63,16 +63,20 @@ namespace PGSauce.Games.IaEsgi.Sokoban
         public SokobanData Level => level;
 
         public GameObject Player => _player;
+
+        public int CrateCount => level.Caisses.Count;
+        
         public override void ResetGameForNewEpoch()
         {
-            gameOver = false;
-            caisseCount = 0;
-            occupants = new Dictionary<GameObject, Vector2>();
-            ParseLevel();
-            CreateLevel();
+            Init();
         }
 
         protected override void GameCustomInit()
+        {
+            Init();
+        }
+
+        public void Init()
         {
             gameOver = false;
             caisseCount = 0;
@@ -87,7 +91,7 @@ namespace PGSauce.Games.IaEsgi.Sokoban
             foreach (var state in Algorithm.States)
             {
                 var action = Algorithm.GetBestAction(state);
-                Destroy(_dirOnTile[state.Coords.y + 1, state.Coords.x + 1]);
+                Destroy(_dirOnTile[state.PlayerCoords.y + 1, state.PlayerCoords.x + 1]);
 
                 GameObject chosenPrefabs;
                 switch (action.Name)
@@ -112,10 +116,10 @@ namespace PGSauce.Games.IaEsgi.Sokoban
                         break;
                 }
 
-                _dirOnTile[state.Coords.y + 1, state.Coords.x + 1] = Instantiate(chosenPrefabs, new Vector3(0, 0, -0.03f), chosenPrefabs.transform.rotation);
-                _dirOnTile[state.Coords.y + 1, state.Coords.x + 1].transform.position = GetScreenPointFromLevelIndices(state.Coords.y + 1, state.Coords.x + 1, -0.04f);
-                _dirOnTile[state.Coords.y + 1, state.Coords.x + 1].transform.localScale *= tileSize;
-                _dirOnTile[state.Coords.y + 1, state.Coords.x + 1].name = "2dir" + (state.Coords.y) + "_" + (state.Coords.x);
+                _dirOnTile[state.PlayerCoords.y + 1, state.PlayerCoords.x + 1] = Instantiate(chosenPrefabs, new Vector3(0, 0, -0.03f), chosenPrefabs.transform.rotation);
+                _dirOnTile[state.PlayerCoords.y + 1, state.PlayerCoords.x + 1].transform.position = GetScreenPointFromLevelIndices(state.PlayerCoords.y + 1, state.PlayerCoords.x + 1, -0.04f);
+                _dirOnTile[state.PlayerCoords.y + 1, state.PlayerCoords.x + 1].transform.localScale *= tileSize;
+                _dirOnTile[state.PlayerCoords.y + 1, state.PlayerCoords.x + 1].name = "2dir" + (state.PlayerCoords.y) + "_" + (state.PlayerCoords.x);
 
             }
 
@@ -223,11 +227,159 @@ namespace PGSauce.Games.IaEsgi.Sokoban
 
         public float GetTileValue(Coords coords)
         {
-            var factor = coords.Equals(Agent.OldState.Coords) ? 2 : 1;
+            var factor = coords.Equals(Agent.OldState.PlayerCoords) ? 2 : 1;
             
 
             PGDebug.Message($"{coords} is blank").Log();
             return Level.blankValue * factor;
+        }
+        
+        private void TryMoveHero(int direction)
+        {
+            Vector2 heroPos;
+            Vector2 oldHeroPos;
+            Vector2 nextPos;
+            occupants.TryGetValue(_player, out oldHeroPos);
+            heroPos = GetNextPositionAlong(oldHeroPos, direction);//find the next array position in given direction
+
+            if (IsValidPosition(heroPos))
+            {//check if it is a valid position & falls inside the level array
+                if (!IsOccuppied(heroPos))
+                {//check if it is occuppied by a ball
+                 //move hero
+                    RemoveOccuppant(oldHeroPos);//reset old level data at old position
+                    _player.transform.position = GetScreenPointFromLevelIndices((int)heroPos.x, (int)heroPos.y, -0.2f);
+                    occupants[_player] = heroPos;
+                    if (levelData[(int)heroPos.x, (int)heroPos.y] == groundTile)
+                    {//moving onto a ground tile
+                        levelData[(int)heroPos.x, (int)heroPos.y] = playerTile;
+                    }
+                    else if (levelData[(int)heroPos.x, (int)heroPos.y] == objectifTile)
+                    {//moving onto a destination tile
+                        levelData[(int)heroPos.x, (int)heroPos.y] = playerOnDestinationTile;
+                    }
+                }
+                else
+                {
+                    //we have a ball next to hero, check if it is empty on the other side of the ball
+                    nextPos = GetNextPositionAlong(heroPos, direction);
+                    if (IsValidPosition(nextPos))
+                    {
+                        if (!IsOccuppied(nextPos))
+                        {//we found empty neighbor, so we need to move both ball & hero
+                            GameObject ball = GetOccupantAtPosition(heroPos);//find the ball at this position
+                            if (ball == null) Debug.Log("no ball");
+                            RemoveOccuppant(heroPos);//ball should be moved first before moving the hero
+                            ball.transform.position = GetScreenPointFromLevelIndices((int)nextPos.x, (int)nextPos.y, - 0.2f);
+                            occupants[ball] = nextPos;
+                            if (levelData[(int)nextPos.x, (int)nextPos.y] == groundTile)
+                            {
+                                levelData[(int)nextPos.x, (int)nextPos.y] = caisseTile;
+                            }
+                            else if (levelData[(int)nextPos.x, (int)nextPos.y] == objectifTile)
+                            {
+                                levelData[(int)nextPos.x, (int)nextPos.y] = caisseOnDestinationTile;
+                            }
+                            RemoveOccuppant(oldHeroPos);//now move hero
+                            _player.transform.position = GetScreenPointFromLevelIndices((int)heroPos.x, (int)heroPos.y, -0.2f);
+                            occupants[_player] = heroPos;
+                            if (levelData[(int)heroPos.x, (int)heroPos.y] == groundTile)
+                            {
+                                levelData[(int)heroPos.x, (int)heroPos.y] = playerTile;
+                            }
+                            else if (levelData[(int)heroPos.x, (int)heroPos.y] == objectifTile)
+                            {
+                                levelData[(int)heroPos.x, (int)heroPos.y] = playerOnDestinationTile;
+                            }
+                        }
+                    }
+                }
+                CheckCompletion();//check if all balls have reached destinations
+            }
+        }
+        
+        private GameObject GetOccupantAtPosition(Vector2 heroPos)
+        {//loop through the occupants to find the ball at given position
+            GameObject ball;
+            foreach (KeyValuePair<GameObject, Vector2> pair in occupants)
+            {
+                if (pair.Value == heroPos)
+                {
+                    ball = pair.Key;
+                    return ball;
+                }
+            }
+            return null;
+        }
+        
+        private void RemoveOccuppant(Vector2 objPos)
+        {
+            if (levelData[(int)objPos.x, (int)objPos.y] == playerTile || levelData[(int)objPos.x, (int)objPos.y] == caisseTile)
+            {
+                levelData[(int)objPos.x, (int)objPos.y] = groundTile;//ball moving from ground tile
+            }
+            else if (levelData[(int)objPos.x, (int)objPos.y] == playerOnDestinationTile)
+            {
+                levelData[(int)objPos.x, (int)objPos.y] = objectifTile;//hero moving from destination tile
+            }
+            else if (levelData[(int)objPos.x, (int)objPos.y] == caisseOnDestinationTile)
+            {
+                levelData[(int)objPos.x, (int)objPos.y] = objectifTile;//ball moving from destination tile
+            }
+        }
+        
+        private bool IsOccuppied(Vector2 objPos)
+        {//check if there is a ball at given array position
+            return (levelData[(int)objPos.x, (int)objPos.y] == caisseTile || levelData[(int)objPos.x, (int)objPos.y] == caisseOnDestinationTile);
+        }
+        
+        public bool IsValidPosition(Vector2 objPos)
+        {//check if the given indices fall within the array dimensions
+            if (objPos.x > -1 && objPos.x < _rows && objPos.y > -1 && objPos.y < _cols)
+            {
+                return levelData[(int)objPos.x, (int)objPos.y] != wallTile;
+            }
+            else return false;
+        }
+        
+        private void CheckCompletion()
+        {
+            int ballsOnDestination = 0;
+            for (int i = 0; i < _rows; i++)
+            {
+                for (int j = 0; j < _cols; j++)
+                {
+                    if (levelData[i, j] == caisseOnDestinationTile)
+                    {
+                        ballsOnDestination++;
+                    }
+                }
+            }
+            if (ballsOnDestination == caisseCount)
+            {
+                Debug.Log("level complete");
+                gameOver = true;
+            }
+        }
+        
+        private Vector2 GetNextPositionAlong(Vector2 objPos, int direction)
+        {
+            switch (direction)
+            {
+                case 0:
+                    objPos.x -= 1;//up
+                    break;
+                case 1:
+                    objPos.y += 1;//right
+                    break;
+                case 2:
+                    objPos.x += 1;//down
+                    break;
+                case 3:
+                    objPos.y -= 1;//left
+                    break;
+            }
+            return objPos;
         }
     }
 }

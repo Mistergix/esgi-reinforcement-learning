@@ -9,13 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76426f9aded5bb44280c7253877bdd67, type: 3}
-  m_Name: Grid World Q Learning
+  m_Script: {fileID: 11500000, guid: 556df628bf6c88b439e5faa475971324, type: 3}
+  m_Name: Sokoban Data 3
   m_EditorClassIdentifier: 
-  maxEpochs: 200
-  learningRate: 0.6
-  discountRate: 0.1
-  epsilonGreedyInitialRate: 0.3
-  waitTimeTrain: 0.016666668
-  waitTimeRun: 0.5
-  showTraining: 0
+  width: 3
+  height: 3
+  start:
+    x: 1
+    y: 0
+  Caisses:
+  - x: 1
+    y: 1
+  Objectifs:
+  - x: 0
+    y: 2
+  Murs:
+  - x: 2
+    y: 2
+  blankValue: -10

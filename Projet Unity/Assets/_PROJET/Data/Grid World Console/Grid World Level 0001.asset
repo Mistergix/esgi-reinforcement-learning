@@ -26,3 +26,7 @@ MonoBehaviour:
   - x: 1
     y: 1
   energy: []
+  bombValue: -10
+  energyValue: 1
+  endValue: 10
+  blankValue: 0

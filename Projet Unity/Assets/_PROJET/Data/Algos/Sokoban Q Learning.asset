@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5115a752a7ee96438122f5d5d3f15ae, type: 3}
   m_Name: Sokoban Q Learning
   m_EditorClassIdentifier: 
-  maxEpochs: 10
-  learningRate: 0
-  discountRate: 0
-  epsilonGreedyInitialRate: 0
+  maxEpochs: 200
+  learningRate: 0.6
+  discountRate: 0.1
+  epsilonGreedyInitialRate: 0.3
   waitTimeTrain: 0.016666668
   waitTimeRun: 0.5
   showTraining: 0

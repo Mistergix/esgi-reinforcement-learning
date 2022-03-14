@@ -16,7 +16,7 @@ MonoBehaviour:
   learningRate: 0.758
   discountRate: 0.451
   epsilonGreedyInitialRate: 0.605
-  waitTimeTrain: 1.08
+  waitTimeTrain: 0.5
   waitTimeRun: 0.5
   showTraining: 1
-  theta: 1.75
+  theta: 1

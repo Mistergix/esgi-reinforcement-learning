@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -342,8 +342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fece039369d4447adada3e4aae1e3f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  algorithm: {fileID: 11400000, guid: e1a4e851428d9834f884b42c6e0f90c1, type: 2}
-  level: {fileID: 11400000, guid: 71be88daf6b477c46b6defa4285fbfe2, type: 2}
+  algorithm: {fileID: 11400000, guid: cdec2a781c5d0d041b960353883ee7d2, type: 2}
+  level: {fileID: 11400000, guid: d88a33532d0261b41b1ad1afbf4270ce, type: 2}
   cam: {fileID: 966608460}
   groundTile: 0
   groundPrefabs: {fileID: 5676718401400714894, guid: 3fc4a63abb4908144b550b634d776ebd, type: 3}

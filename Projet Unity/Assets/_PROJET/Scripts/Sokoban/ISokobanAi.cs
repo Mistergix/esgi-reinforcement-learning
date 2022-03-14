@@ -16,5 +16,9 @@ namespace PGSauce.Games.IaEsgi.Sokoban
         public QStateSokoban GoRight();
 
         float GetTileValue(Coords coords);
+        QStateSokoban PushUp();
+        QStateSokoban PushDown();
+        QStateSokoban PushLeft();
+        QStateSokoban PushRight();
     }
 }

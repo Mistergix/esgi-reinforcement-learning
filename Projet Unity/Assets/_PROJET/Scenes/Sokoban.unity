@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,71 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &343175898
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 319020616166352932, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_Name
+      value: Algo UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 195.85034
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1015.7885
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352933, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352934, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: algo
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 319020616166352934, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
+      propertyPath: game
+      value: 
+      objectReference: {fileID: 1048670972}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f7d8693d82c8c8c49887d3304cb91677, type: 3}
 --- !u!1 &378025778
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +527,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1048670971}
-  - component: {fileID: 1048670970}
   - component: {fileID: 1048670972}
   m_Layer: 0
   m_Name: Sokoban
@@ -471,39 +535,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1048670970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1048670969}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3239e9065b99ab4cb7c5cb7c1b7dd2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 1299025936}
-  level: {fileID: 11400000, guid: 3e0cce24a0944824cb9f74635f64cf4f, type: 2}
-  tileSprite: {fileID: 21300000, guid: 508a7439878cb470980c7c380e33c312, type: 3}
-  heroSprite: {fileID: -9095717837082945937, guid: bd3cb4af8406d4436a2ae8c2aafe1f8d, type: 3}
-  ballSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  objectifColor: {r: 1, g: 0.756372, b: 0.61006284, a: 1}
-  WallColor: {r: 0, g: 0, b: 0, a: 1}
-  groundPrefabs: {fileID: 0}
-  playerPrefabs: {fileID: 5606763262523975416, guid: e13bdf5e8250ee3479e61101382debb0, type: 3}
-  caissePrefabs: {fileID: 1888910838045226584, guid: 3994827ccefb9874aae0349e9b895a52, type: 3}
-  objectifPrefabs: {fileID: 6319884326049186822, guid: 6a479b55923eec742935206ee9246796, type: 3}
-  wallPrefabs: {fileID: 4294231509335371533, guid: 8dca1384cf1cd0f44958fce8b558864f, type: 3}
-  wallTile: -1
-  groundTile: 1
-  objectifTile: 0
-  playerTile: 3
-  caisseTile: 2
-  playerOnDestinationTile: -3
-  caisseOnDestinationTile: -2
-  userInputKeys: 11010000130100001201000014010000
-  tileSize: 2
 --- !u!4 &1048670971
 Transform:
   m_ObjectHideFlags: 0
@@ -532,7 +563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   algorithm: {fileID: 11400000, guid: 374b65499621c6848b3693e46064a6a8, type: 2}
   cam: {fileID: 1299025936}
-  level: {fileID: 11400000, guid: 3e0cce24a0944824cb9f74635f64cf4f, type: 2}
+  level: {fileID: 11400000, guid: 9968801fd4865194f934141941152a7d, type: 2}
   tileSprite: {fileID: 21300000, guid: 508a7439878cb470980c7c380e33c312, type: 3}
   heroSprite: {fileID: 21300000, guid: 7c7d74dccb8dbeb41918ffe3004364f3, type: 3}
   ballSprite: {fileID: 21300000, guid: 24748f38afc54904881aee4cf4fb28e0, type: 3}

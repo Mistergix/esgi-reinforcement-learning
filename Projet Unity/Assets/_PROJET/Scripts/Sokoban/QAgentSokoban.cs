@@ -36,7 +36,27 @@ namespace PGSauce.Games.IaEsgi.Sokoban
 
         public override float GetCurrentReward(QStateSokoban @from, QStateSokoban to, QAction<QAgentSokoban, QStateSokoban> policyAction)
         {
-            return _sokoban.GetTileValue(to.Coords);
+            return _sokoban.GetTileValue(to.PlayerCoords);
+        }
+
+        public QStateSokoban PushUp()
+        {
+            return _sokoban.PushUp();
+        }
+        
+        public QStateSokoban PushDown()
+        {
+            return _sokoban.PushDown();
+        }
+        
+        public QStateSokoban PushLeft()
+        {
+            return _sokoban.PushLeft();
+        }
+        
+        public QStateSokoban PushRight()
+        {
+            return _sokoban.PushRight();
         }
     }
 }
