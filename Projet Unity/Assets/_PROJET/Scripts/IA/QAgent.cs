@@ -1,19 +1,41 @@
-﻿namespace PGSauce.Games.IaEsgi.Ia
-{
-    public abstract class QAgent
-    {
-        private QState _currentState;
+﻿using System.Collections.Generic;
+using PGSauce.Core.PGDebugging;
+using PGSauce.Games.IaEsgi.GridWorldConsole;
 
-        protected QAgent(QState currentState)
+namespace PGSauce.Games.IaEsgi.Ia
+{
+    public abstract class QAgent<TAgent, TState> : QAgentBase where TAgent : QAgentBase where TState : QState
+    {
+        private TState _oldState;
+
+        protected QAgent(List<TState> states, List<QAction<TAgent, TState>> actions, TState currentState)
         {
-            _currentState = currentState;
+            CurrentState = currentState;
+            _oldState = CurrentState;
+            Actions = actions;
+            States = states;
         }
 
-        public QState CurrentState => _currentState;
+        public TState CurrentState { get; set; }
 
-        public void TakeAction(QAction action)
+        public List<QAction<TAgent, TState>> Actions { get; }
+        public List<TState> States { get; }
+
+        public TState OldState => _oldState;
+
+        public void TakeAction(QAction<TAgent, TState> action)
         {
-            
+            PGDebug.Message($"Current state is {CurrentState}").Log();
+            _oldState = CurrentState;
+            CurrentState = action.DoAction(this);
+            PGDebug.Message($"Current state is after action {CurrentState}").Log();
+        }
+
+        public abstract float GetCurrentReward(TState @from, TState to, QAction<TAgent, TState> policyAction);
+
+        public float GetCurrentReward(QAction<TAgent, TState> qAction)
+        {
+            return GetCurrentReward(OldState, CurrentState, qAction);
         }
     }
 }
